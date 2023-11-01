@@ -1,0 +1,25 @@
+add_library (Pixelflow SHARED
+    "hw0/process_image.c"
+    "hw1/resize_image.c"
+    "hw2/filter_image.c"
+    "hw3/harris_image.c"
+    "hw3/panorama_image.c"
+    "hw4/flow_image.c"
+    "hw5/classifier.c"
+    "args.c"
+    "data.c"
+    "image_opencv.cpp"
+    "list.c"
+    "load_image.c"
+    "main.c"
+    "matrix.c"
+    "test.c"
+)
+
+target_compile_features (Pixelflow
+	PRIVATE cxx_std_11
+)
+
+target_include_directories (Pixelflow
+	PUBLIC "../include"
+)
