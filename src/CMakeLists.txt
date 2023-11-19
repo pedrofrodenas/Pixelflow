@@ -1,4 +1,5 @@
 add_library (Pixelflow SHARED
+    "color/color.c"
     "hw0/process_image.c"
     "hw1/resize_image.c"
     "hw2/filter_image.c"
@@ -11,7 +12,6 @@ add_library (Pixelflow SHARED
     "image_opencv.cpp"
     "list.c"
     "load_image.c"
-    "main.c"
     "matrix.c"
     "test.c"
 )
@@ -20,6 +20,11 @@ target_compile_features (Pixelflow
 	PRIVATE cxx_std_11
 )
 
+SET_TARGET_PROPERTIES(Pixelflow PROPERTIES SUFFIX .so)
+
 target_include_directories (Pixelflow
 	PUBLIC "../include"
 )
+
+add_executable(tests main.c)
+target_link_libraries(tests Pixelflow)
