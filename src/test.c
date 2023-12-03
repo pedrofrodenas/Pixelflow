@@ -126,11 +126,11 @@ void make_hw0_test()
     set_pixel(dots, 0, 1, 3, 245/255.);
     set_pixel(dots, 1, 1, 3, 244/255.);
     set_pixel(dots, 2, 1, 3, 11/255.);
-    save_png(dots, "data/dotz");
+    save_png(dots, "../data/dotz");
 }
 
 void test_get_pixel(){
-    image im = load_image("data/dotz.png");
+    image im = load_image("../data/dotz.png");
     // Within image
     {
         // Top left
@@ -165,7 +165,7 @@ void test_get_pixel(){
 }
 
 void test_set_pixel(){
-    image gt = load_image("data/dotz.png");
+    image gt = load_image("../data/dotz.png");
     image d = make_image(3,2,4);
     set_pixel(d, 0, 0, 0, 0/255.);
     set_pixel(d, 1, 0, 0, 1/255.);
@@ -206,9 +206,9 @@ void test_set_pixel(){
 
 void test_grayscale()
 {
-    image im = load_image("data/colorbar.png");
+    image im = load_image("../data/colorbar.png");
     image gray = rgb_to_grayscale(im);
-    image gt = load_image("figs/gray.png");
+    image gt = load_image("../figs/gray.png");
     TEST(same_image(gray, gt, EPS));
     free_image(im);
     free_image(gray);
@@ -217,10 +217,10 @@ void test_grayscale()
 
 void test_copy()
 {
-    image im = load_image("data/dog.jpg");
+    image im = load_image("../data/dog.jpg");
     image c = copy_image(im);
 
-    image gt = load_image("data/dog.jpg");
+    image gt = load_image("../data/dog.jpg");
     TEST(same_image(c, gt, EPS));
     free_image(gt);
     free_image(c);
@@ -229,7 +229,7 @@ void test_copy()
 
 void test_clamp()
 {
-    image im = load_image("data/dog.jpg");
+    image im = load_image("../data/dog.jpg");
     image c = copy_image(im);
     set_pixel(im, 0, 5, 10, -1);
     set_pixel(im, 1, 15, 15, 1.001);
@@ -248,7 +248,7 @@ void test_clamp()
 
 void test_shift()
 {
-    image im = load_image("data/dog.jpg");
+    image im = load_image("../data/dog.jpg");
     image c = copy_image(im);
     shift_image(c, 1, .1);
     TEST(within_eps(c.data[0], im.data[0], EPS));
@@ -261,9 +261,9 @@ void test_shift()
 
 void test_rgb_to_hsv()
 {
-    image im = load_image("data/dog.jpg");
+    image im = load_image("../data/dog.jpg");
     rgb_to_hsv(im);
-    image hsv = load_image("figs/dog.hsv.png");
+    image hsv = load_image("../figs/dog.hsv.png");
     TEST(same_image(im, hsv, EPS));
     free_image(im);
     free_image(hsv);
@@ -271,7 +271,7 @@ void test_rgb_to_hsv()
 
 void test_hsv_to_rgb()
 {
-    image im = load_image("data/dog.jpg");
+    image im = load_image("../data/dog.jpg");
     image c = copy_image(im);
     rgb_to_hsv(im);
     hsv_to_rgb(im);
@@ -282,7 +282,7 @@ void test_hsv_to_rgb()
 
 void test_nn_interpolate()
 {
-    image im = load_image("data/dogsmall.jpg");
+    image im = load_image("../data/dogsmall.jpg");
     TEST(within_eps(nn_interpolate(im, 0, -.5, -.5)  , 0.231373, EPS));
     TEST(within_eps(nn_interpolate(im, 1, .5, -.5)   , 0.239216, EPS));
     TEST(within_eps(nn_interpolate(im, 2, .5, .499)  , 0.207843, EPS));
@@ -292,7 +292,7 @@ void test_nn_interpolate()
 
 void test_bl_interpolate()
 {
-    image im = load_image("data/dogsmall.jpg");
+    image im = load_image("../data/dogsmall.jpg");
     TEST(within_eps(bilinear_interpolate(im, 0, -.5, -.5)  , 0.231373, EPS));
     TEST(within_eps(bilinear_interpolate(im, 1, .5, -.5)   , 0.237255, EPS));
     TEST(within_eps(bilinear_interpolate(im, 2, .5, .499)  , 0.206861, EPS));

@@ -5,3 +5,6 @@ project (Pixelflow
 	DESCRIPTION "computer vision library,"
 )
 add_subdirectory ("src")
+
+file(COPY ${CMAKE_SOURCE_DIR}/data DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+file(COPY ${CMAKE_SOURCE_DIR}/figs DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")

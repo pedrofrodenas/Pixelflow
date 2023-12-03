@@ -170,3 +170,39 @@ void hsv_to_rgb(image im)
         im.data[i + channelOffset * 2] = B;
     }   
 }
+
+image colorize_sobel(image im)
+{
+    // TODO
+    image filter = make_gaussian_filter(3);
+
+    image outConv = convolve_image(im, filter, 1);
+
+    image *magnitude = sobel_image(outConv);
+
+    feature_normalize(magnitude[0]);
+    feature_normalize(magnitude[1]);
+
+    image output = make_image(im.c, im.h, im.w);
+
+    for (int i=0; i!=im.h; i++)
+    {
+        for (int j=0; j!=im.w; j++)
+        {
+            set_pixel(output, 0, i, j, get_pixel(magnitude[1], 0, i, j));
+            set_pixel(output, 1, i, j, get_pixel(magnitude[0], 0, i, j));
+            set_pixel(output, 2, i, j, get_pixel(magnitude[0], 0, i, j));
+        }
+    }
+    hsv_to_rgb(output);
+
+    free_image(filter);
+    free_image(outConv);
+    
+    for (int i=0; i<2; ++i)
+    {
+        free_image(magnitude[i]);
+    }
+
+    return output;
+}

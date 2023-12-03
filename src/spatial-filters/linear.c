@@ -6,6 +6,17 @@
 #include "image.h"
 #define TWOPI 6.2831853
 
+image make_box_filter(int w)
+{
+    // TODO
+    image im = make_image(1,w,w);
+    // Adds one to each image possition
+    shift_image(im, 0, 1.0f);
+    // Normalize values
+    l1_normalize(im);
+    return im;
+}
+
 image convolve_image(image im, image filter, int preserve)
 {
     // TODO
