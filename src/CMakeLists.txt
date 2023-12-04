@@ -3,7 +3,7 @@ add_library (Pixelflow SHARED
     "spatial-filters/linear.c"
     "core/math.c"
     "core/normalization.c"
-    "hw0/process_image.c"
+    "core/operation.c"
     "hw1/resize_image.c"
     "hw3/harris_image.c"
     "hw3/panorama_image.c"
