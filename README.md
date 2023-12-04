@@ -8,5 +8,7 @@ To get started, make sure you have `git`, a C compiler, and `make` installed. Th
 
     git clone https://github.com/pedrofrodenas/pixelflow.git
     cd pixelflow
+    mkdir build && cd build
+    cmake ..
     make
 
