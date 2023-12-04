@@ -359,13 +359,13 @@ void test_multiple_resize()
 
 
 void test_highpass_filter(){
-    image im = load_image("data/dog.jpg");
+    image im = load_image("../data/dog.jpg");
     image f = make_highpass_filter();
     image blur = convolve_image(im, f, 0);
     clamp_image(blur);
 
 
-    image gt = load_image("figs/dog-highpass.png");
+    image gt = load_image("../figs/dog-highpass.png");
     TEST(same_image(blur, gt, EPS));
     free_image(im);
     free_image(f);
@@ -374,13 +374,13 @@ void test_highpass_filter(){
 }
 
 void test_emboss_filter(){
-    image im = load_image("data/dog.jpg");
+    image im = load_image("../data/dog.jpg");
     image f = make_emboss_filter();
     image blur = convolve_image(im, f, 1);
     clamp_image(blur);
 
 
-    image gt = load_image("figs/dog-emboss.png");
+    image gt = load_image("../figs/dog-emboss.png");
     TEST(same_image(blur, gt, EPS));
     free_image(im);
     free_image(f);
@@ -389,13 +389,13 @@ void test_emboss_filter(){
 }
 
 void test_sharpen_filter(){
-    image im = load_image("data/dog.jpg");
+    image im = load_image("../data/dog.jpg");
     image f = make_sharpen_filter();
     image blur = convolve_image(im, f, 1);
     clamp_image(blur);
 
 
-    image gt = load_image("figs/dog-sharpen.png");
+    image gt = load_image("../figs/dog-sharpen.png");
     TEST(same_image(blur, gt, EPS));
     free_image(im);
     free_image(f);
@@ -404,12 +404,12 @@ void test_sharpen_filter(){
 }
 
 void test_convolution(){
-    image im = load_image("data/dog.jpg");
+    image im = load_image("../data/dog.jpg");
     image f = make_box_filter(7);
     image blur = convolve_image(im, f, 1);
     clamp_image(blur);
 
-    image gt = load_image("figs/dog-box7.png");
+    image gt = load_image("../figs/dog-box7.png");
     TEST(same_image(blur, gt, EPS));
     free_image(im);
     free_image(f);
@@ -425,19 +425,19 @@ void test_gaussian_filter(){
         f.data[i] *= 100;
     }
 
-    image gt = load_image("figs/gaussian_filter_7.png");
+    image gt = load_image("../figs/gaussian_filter_7.png");
     TEST(same_image(f, gt, EPS));
     free_image(f);
     free_image(gt);
 }
 
 void test_gaussian_blur(){
-    image im = load_image("data/dog.jpg");
+    image im = load_image("../data/dog.jpg");
     image f = make_gaussian_filter(2);
     image blur = convolve_image(im, f, 1);
     clamp_image(blur);
 
-    image gt = load_image("figs/dog-gauss2.png");
+    image gt = load_image("../figs/dog-gauss2.png");
     TEST(same_image(blur, gt, EPS));
     free_image(im);
     free_image(f);
@@ -446,14 +446,14 @@ void test_gaussian_blur(){
 }
 
 void test_hybrid_image(){
-    image melisa = load_image("data/melisa.png");
-    image aria = load_image("data/aria.png");
+    image melisa = load_image("../data/melisa.png");
+    image aria = load_image("../data/aria.png");
     image f = make_gaussian_filter(2);
     image lfreq_m = convolve_image(melisa, f, 1);
     image lfreq_a = convolve_image(aria, f, 1);
     image hfreq_a = sub_image(aria , lfreq_a);
     image reconstruct = add_image(lfreq_m , hfreq_a);
-    image gt = load_image("figs/hybrid.png");
+    image gt = load_image("../figs/hybrid.png");
     clamp_image(reconstruct);
     TEST(same_image(reconstruct, gt, EPS));
     free_image(melisa);
@@ -467,14 +467,14 @@ void test_hybrid_image(){
 }
 
 void test_frequency_image(){
-    image im = load_image("data/dog.jpg");
+    image im = load_image("../data/dog.jpg");
     image f = make_gaussian_filter(2);
     image lfreq = convolve_image(im, f, 1);
     image hfreq = sub_image(im, lfreq);
     image reconstruct = add_image(lfreq , hfreq);
 
-    image low_freq = load_image("figs/low-frequency.png");
-    image high_freq = load_image("figs/high-frequency-clamp.png");
+    image low_freq = load_image("../figs/low-frequency.png");
+    image high_freq = load_image("../figs/high-frequency-clamp.png");
 
     clamp_image(lfreq);
     clamp_image(hfreq);
@@ -491,15 +491,15 @@ void test_frequency_image(){
 }
 
 void test_sobel(){
-    image im = load_image("data/dog.jpg");
+    image im = load_image("../data/dog.jpg");
     image *res = sobel_image(im);
     image mag = res[0];
     image theta = res[1];
     feature_normalize2(mag);
     feature_normalize2(theta);
 
-    image gt_mag = load_image("figs/magnitude.png");
-    image gt_theta = load_image("figs/theta.png");
+    image gt_mag = load_image("../figs/magnitude.png");
+    image gt_theta = load_image("../figs/theta.png");
     TEST(gt_mag.w == mag.w && gt_theta.w == theta.w);
     TEST(gt_mag.h == mag.h && gt_theta.h == theta.h);
     TEST(gt_mag.c == mag.c && gt_theta.c == theta.c);
@@ -530,10 +530,10 @@ void test_sobel(){
 
 void test_structure()
 {
-    image im = load_image("data/dogbw.png");
+    image im = load_image("../data/dogbw.png");
     image s = structure_matrix(im, 2);
     feature_normalize2(s);
-    image gt = load_image("figs/structure.png");
+    image gt = load_image("../figs/structure.png");
     TEST(same_image(s, gt, EPS));
     free_image(im);
     free_image(s);
@@ -542,11 +542,11 @@ void test_structure()
 
 void test_cornerness()
 {
-    image im = load_image("data/dogbw.png");
+    image im = load_image("../data/dogbw.png");
     image s = structure_matrix(im, 2);
     image c = cornerness_response(s);
     feature_normalize2(c);
-    image gt = load_image("figs/response.png");
+    image gt = load_image("../figs/response.png");
     TEST(same_image(c, gt, EPS));
     free_image(im);
     free_image(s);
@@ -615,11 +615,11 @@ void test_compute_homography()
 
 void test_activate_matrix()
 {
-    matrix a = load_matrix("data/test/a.matrix");
-    matrix truth_alog = load_matrix("data/test/alog.matrix");
-    matrix truth_arelu = load_matrix("data/test/arelu.matrix");
-    matrix truth_alrelu = load_matrix("data/test/alrelu.matrix");
-    matrix truth_asoft = load_matrix("data/test/asoft.matrix");
+    matrix a = load_matrix("../data/test/a.matrix");
+    matrix truth_alog = load_matrix("../data/test/alog.matrix");
+    matrix truth_arelu = load_matrix("../data/test/arelu.matrix");
+    matrix truth_alrelu = load_matrix("../data/test/alrelu.matrix");
+    matrix truth_asoft = load_matrix("../data/test/asoft.matrix");
     matrix alog = copy_matrix(a);
     activate_matrix(alog, LOGISTIC);
     matrix arelu = copy_matrix(a);
@@ -645,12 +645,12 @@ void test_activate_matrix()
 
 void test_gradient_matrix()
 {
-    matrix a = load_matrix("data/test/a.matrix");
-    matrix y = load_matrix("data/test/y.matrix");
-    matrix truth_glog = load_matrix("data/test/glog.matrix");
-    matrix truth_grelu = load_matrix("data/test/grelu.matrix");
-    matrix truth_glrelu = load_matrix("data/test/glrelu.matrix");
-    matrix truth_gsoft = load_matrix("data/test/gsoft.matrix");
+    matrix a = load_matrix("../data/test/a.matrix");
+    matrix y = load_matrix("../data/test/y.matrix");
+    matrix truth_glog = load_matrix("../data/test/glog.matrix");
+    matrix truth_grelu = load_matrix("../data/test/grelu.matrix");
+    matrix truth_glrelu = load_matrix("../data/test/glrelu.matrix");
+    matrix truth_gsoft = load_matrix("../data/test/gsoft.matrix");
     matrix glog = copy_matrix(a);
     matrix grelu = copy_matrix(a);
     matrix glrelu = copy_matrix(a);
@@ -677,21 +677,21 @@ void test_gradient_matrix()
 
 void test_layer()
 {
-    matrix a = load_matrix("data/test/a.matrix");
-    matrix w = load_matrix("data/test/w.matrix");
-    matrix dw = load_matrix("data/test/dw.matrix");
-    matrix v = load_matrix("data/test/v.matrix");
-    matrix delta = load_matrix("data/test/delta.matrix");
+    matrix a = load_matrix("../data/test/a.matrix");
+    matrix w = load_matrix("../data/test/w.matrix");
+    matrix dw = load_matrix("../data/test/dw.matrix");
+    matrix v = load_matrix("../data/test/v.matrix");
+    matrix delta = load_matrix("../data/test/delta.matrix");
 
-    matrix truth_dx = load_matrix("data/test/truth_dx.matrix");
-    matrix truth_v = load_matrix("data/test/truth_v.matrix");
-    matrix truth_dw = load_matrix("data/test/truth_dw.matrix");
+    matrix truth_dx = load_matrix("../data/test/truth_dx.matrix");
+    matrix truth_v = load_matrix("../data/test/truth_v.matrix");
+    matrix truth_dw = load_matrix("../data/test/truth_dw.matrix");
 
-    matrix updated_dw = load_matrix("data/test/updated_dw.matrix");
-    matrix updated_w = load_matrix("data/test/updated_w.matrix");
-    matrix updated_v = load_matrix("data/test/updated_v.matrix");
+    matrix updated_dw = load_matrix("../data/test/updated_dw.matrix");
+    matrix updated_w = load_matrix("../data/test/updated_w.matrix");
+    matrix updated_v = load_matrix("../data/test/updated_v.matrix");
 
-    matrix truth_out = load_matrix("data/test/out.matrix");
+    matrix truth_out = load_matrix("../data/test/out.matrix");
     layer l = make_layer(64, 16, LRELU);
     free_matrix(l.w);
     free_matrix(l.dw);
@@ -742,45 +742,45 @@ void make_matrix_test()
     matrix v = random_matrix(64, 16, 10);
     matrix delta = random_matrix(32, 16, 10);
 
-    save_matrix(a, "data/test/a.matrix");
-    save_matrix(w, "data/test/w.matrix");
-    save_matrix(dw, "data/test/dw.matrix");
-    save_matrix(v, "data/test/v.matrix");
-    save_matrix(delta, "data/test/delta.matrix");
-    save_matrix(y, "data/test/y.matrix");
+    save_matrix(a, "../data/test/a.matrix");
+    save_matrix(w, "../data/test/w.matrix");
+    save_matrix(dw, "../data/test/dw.matrix");
+    save_matrix(v, "../data/test/v.matrix");
+    save_matrix(delta, "../data/test/delta.matrix");
+    save_matrix(y, "../data/test/y.matrix");
 
     matrix alog = copy_matrix(a);
     activate_matrix(alog, LOGISTIC);
-    save_matrix(alog, "data/test/alog.matrix");
+    save_matrix(alog, "../data/test/alog.matrix");
 
     matrix arelu = copy_matrix(a);
     activate_matrix(arelu, RELU);
-    save_matrix(arelu, "data/test/arelu.matrix");
+    save_matrix(arelu, "../data/test/arelu.matrix");
 
     matrix alrelu = copy_matrix(a);
     activate_matrix(alrelu, LRELU);
-    save_matrix(alrelu, "data/test/alrelu.matrix");
+    save_matrix(alrelu, "../data/test/alrelu.matrix");
 
     matrix asoft = copy_matrix(a);
     activate_matrix(asoft, SOFTMAX);
-    save_matrix(asoft, "data/test/asoft.matrix");
+    save_matrix(asoft, "../data/test/asoft.matrix");
 
 
     matrix glog = copy_matrix(a);
     gradient_matrix(y, LOGISTIC, glog);
-    save_matrix(glog, "data/test/glog.matrix");
+    save_matrix(glog, "../data/test/glog.matrix");
 
     matrix grelu = copy_matrix(a);
     gradient_matrix(y, RELU, grelu);
-    save_matrix(grelu, "data/test/grelu.matrix");
+    save_matrix(grelu, "../data/test/grelu.matrix");
 
     matrix glrelu = copy_matrix(a);
     gradient_matrix(y, LRELU, glrelu);
-    save_matrix(glrelu, "data/test/glrelu.matrix");
+    save_matrix(glrelu, "../data/test/glrelu.matrix");
 
     matrix gsoft = copy_matrix(a);
     gradient_matrix(y, SOFTMAX, gsoft);
-    save_matrix(gsoft, "data/test/gsoft.matrix");
+    save_matrix(gsoft, "../data/test/gsoft.matrix");
 
 
     layer l = make_layer(64, 16, LRELU);
@@ -789,17 +789,17 @@ void make_matrix_test()
     l.v = v;
 
     matrix out = forward_layer(&l, a);
-    save_matrix(out, "data/test/out.matrix");
+    save_matrix(out, "../data/test/out.matrix");
 
     matrix dx = backward_layer(&l, delta);
-    save_matrix(l.dw, "data/test/truth_dw.matrix");
-    save_matrix(l.v, "data/test/truth_v.matrix");
-    save_matrix(dx, "data/test/truth_dx.matrix");
+    save_matrix(l.dw, "../data/test/truth_dw.matrix");
+    save_matrix(l.v, "../data/test/truth_v.matrix");
+    save_matrix(dx, "../data/test/truth_dx.matrix");
 
     update_layer(&l, .01, .9, .01);
-    save_matrix(l.dw, "data/test/updated_dw.matrix");
-    save_matrix(l.w, "data/test/updated_w.matrix");
-    save_matrix(l.v, "data/test/updated_v.matrix");
+    save_matrix(l.dw, "../data/test/updated_dw.matrix");
+    save_matrix(l.w, "../data/test/updated_w.matrix");
+    save_matrix(l.v, "../data/test/updated_v.matrix");
 }
 
 void test_hw0()
@@ -846,39 +846,39 @@ void test_hw3()
 }
 void make_hw4_tests()
 {
-    image dots = load_image("data/dots.png");
+    image dots = load_image("../data/dots.png");
     image intdot = make_integral_image(dots);
-    save_image_binary(intdot, "data/dotsintegral.bin");
+    save_image_binary(intdot, "../data/dotsintegral.bin");
 
-    image dogbw = load_image("data/dogbw.png");
+    image dogbw = load_image("../data/dogbw.png");
     image intdog = make_integral_image(dogbw);
-    save_image_binary(intdog, "data/dogintegral.bin");
+    save_image_binary(intdog, "../data/dogintegral.bin");
 
-    image dog = load_image("data/dog.jpg");
+    image dog = load_image("../data/dog.jpg");
     image smooth = box_filter_image(dog, 15);
-    save_png(smooth, "data/dogbox");
+    save_png(smooth, "../data/dogbox");
 
     image smooth_c = center_crop(smooth);
-    save_png(smooth_c, "data/dogboxcenter");
+    save_png(smooth_c, "../data/dogboxcenter");
 
-    image doga = load_image("data/dog_a_small.jpg");
-    image dogb = load_image("data/dog_b_small.jpg");
+    image doga = load_image("../data/dog_a_small.jpg");
+    image dogb = load_image("../data/dog_b_small.jpg");
     image structure = time_structure_matrix(dogb, doga, 15);
-    save_image_binary(structure, "data/structure.bin");
+    save_image_binary(structure, "../data/structure.bin");
 
     image velocity = velocity_image(structure, 5);
-    save_image_binary(velocity, "data/velocity.bin");
+    save_image_binary(velocity, "../data/velocity.bin");
 }
 void test_integral_image()
 {
-    image dots = load_image("data/dots.png");
+    image dots = load_image("../data/dots.png");
     image intdot = make_integral_image(dots);
-    image intdot_t = load_image_binary("data/dotsintegral.bin");
+    image intdot_t = load_image_binary("../data/dotsintegral.bin");
     TEST(same_image(intdot, intdot_t, EPS));
 
-    image dog = load_image("data/dogbw.png");
+    image dog = load_image("../data/dogbw.png");
     image intdog = make_integral_image(dog);
-    image intdog_t = load_image_binary("data/dogintegral.bin");
+    image intdog_t = load_image_binary("../data/dogintegral.bin");
     TEST(same_image(intdog, intdog_t, .6));
 
     free_image(dots);
@@ -890,9 +890,9 @@ void test_integral_image()
 }
 void test_exact_box_filter_image()
 {
-    image dog = load_image("data/dog.jpg");
+    image dog = load_image("../data/dog.jpg");
     image smooth = box_filter_image(dog, 15);
-    image smooth_t = load_image("data/dogbox.png");
+    image smooth_t = load_image("../data/dogbox.png");
     //printf("avg origin difference test: %f\n", avg_diff(smooth, dog));
     //printf("avg smooth difference test: %f\n", avg_diff(smooth, smooth_t));
     TEST(same_image(smooth, smooth_t, EPS*2));
@@ -904,10 +904,10 @@ void test_exact_box_filter_image()
 
 void test_good_enough_box_filter_image()
 {
-    image dog = load_image("data/dog.jpg");
+    image dog = load_image("../data/dog.jpg");
     image smooth = box_filter_image(dog, 15);
     image smooth_c = center_crop(smooth);
-    image smooth_t = load_image("data/dogboxcenter.png");
+    image smooth_t = load_image("../data/dogboxcenter.png");
     image dog_c = center_crop(dog);
     printf("avg origin difference test: %f\n", avg_diff(smooth_c, dog_c));
     printf("avg smooth difference test: %f\n", avg_diff(smooth_c, smooth_t));
@@ -921,10 +921,10 @@ void test_good_enough_box_filter_image()
 }
 void test_structure_image()
 {
-    image doga = load_image("data/dog_a_small.jpg");
-    image dogb = load_image("data/dog_b_small.jpg");
+    image doga = load_image("../data/dog_a_small.jpg");
+    image dogb = load_image("../data/dog_b_small.jpg");
     image structure = time_structure_matrix(dogb, doga, 15);
-    image structure_t = load_image_binary("data/structure.bin");
+    image structure_t = load_image_binary("../data/structure.bin");
     image structure_c = center_crop(structure);
     image structure_tc = center_crop(structure_t);
     TEST(same_image(structure_c, structure_tc, EPS));
@@ -938,9 +938,9 @@ void test_structure_image()
 }
 void test_velocity_image()
 {
-    image structure = load_image_binary("data/structure.bin");
+    image structure = load_image_binary("../data/structure.bin");
     image velocity = velocity_image(structure, 5);
-    image velocity_t = load_image_binary("data/velocity.bin");
+    image velocity_t = load_image_binary("../data/velocity.bin");
     TEST(same_image(velocity, velocity_t, EPS));
     free_image(structure);
     free_image(velocity);
