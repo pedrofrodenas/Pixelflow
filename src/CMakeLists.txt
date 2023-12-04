@@ -8,7 +8,7 @@ add_library (Pixelflow SHARED
     "panorama/harris_image.c"
     "panorama/panorama_image.c"
     "opticalflow/flow_image.c"
-    "hw5/classifier.c"
+    "neural/classifier.c"
     "args.c"
     "data.c"
     "image_opencv.cpp"
