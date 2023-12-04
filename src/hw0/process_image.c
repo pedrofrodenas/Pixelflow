@@ -40,7 +40,7 @@ void set_pixel(image im, int c, int h, int w, float v)
 
 image copy_image(image im)
 {
-    image copy = make_image(im.w, im.h, im.c);
+    image copy = make_image(im.c,  im.h, im.w);
     // TODO Fill this in
     size_t n_bytes = im.w * im.h * im.c * sizeof(float);
     memcpy(copy.data, im.data, n_bytes);

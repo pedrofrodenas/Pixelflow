@@ -304,17 +304,17 @@ void test_bl_interpolate()
 
 void test_nn_resize()
 {
-    image im = load_image("data/dogsmall.jpg");
+    image im = load_image("../data/dogsmall.jpg");
     image resized = nn_resize(im, im.h*4, im.w*4);
-    image gt = load_image("figs/dog4x-nn-for-test.png");
+    image gt = load_image("../figs/dog4x-nn-for-test.png");
     TEST(same_image(resized, gt, EPS));
     free_image(im);
     free_image(resized);
     free_image(gt);
 
-    image im2 = load_image("data/dog.jpg");
+    image im2 = load_image("../data/dog.jpg");
     image resized2 = nn_resize(im2, 467, 713);
-    image gt2 = load_image("figs/dog-resize-nn.png");
+    image gt2 = load_image("../figs/dog-resize-nn.png");
     TEST(same_image(resized2, gt2, EPS));
     free_image(im2);
     free_image(resized2);
@@ -323,17 +323,17 @@ void test_nn_resize()
 
 void test_bl_resize()
 {
-    image im = load_image("data/dogsmall.jpg");
+    image im = load_image("../data/dogsmall.jpg");
     image resized = bilinear_resize(im, im.h*4, im.w*4);
-    image gt = load_image("figs/dog4x-bl.png");
+    image gt = load_image("../figs/dog4x-bl.png");
     TEST(same_image(resized, gt, EPS));
     free_image(im);
     free_image(resized);
     free_image(gt);
 
-    image im2 = load_image("data/dog.jpg");
+    image im2 = load_image("../data/dog.jpg");
     image resized2 = bilinear_resize(im2, 467, 713);
-    image gt2 = load_image("figs/dog-resize-bil.png");
+    image gt2 = load_image("../figs/dog-resize-bil.png");
     TEST(same_image(resized2, gt2, EPS));
     free_image(im2);
     free_image(resized2);
@@ -342,7 +342,7 @@ void test_bl_resize()
 
 void test_multiple_resize()
 {
-    image im = load_image("data/dog.jpg");
+    image im = load_image("../data/dog.jpg");
     int i;
     for (i = 0; i < 10; i++){
         image im1 = bilinear_resize(im, im.h*4, im.w*4);
@@ -351,7 +351,7 @@ void test_multiple_resize()
         free_image(im1);
         im = im2;
     }
-    image gt = load_image("figs/dog-multipleresize.png");
+    image gt = load_image("../figs/dog-multipleresize.png");
     TEST(same_image(im, gt, EPS));
     free_image(im);
     free_image(gt);
