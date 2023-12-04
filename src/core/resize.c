@@ -134,4 +134,3 @@ image bilinear_resize(image im, int h, int w)
     }
 	return imageResized;
 }
-

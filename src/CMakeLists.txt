@@ -4,7 +4,7 @@ add_library (Pixelflow SHARED
     "core/math.c"
     "core/normalization.c"
     "core/operation.c"
-    "hw1/resize_image.c"
+    "core/resize.c"
     "hw3/harris_image.c"
     "hw3/panorama_image.c"
     "hw4/flow_image.c"
