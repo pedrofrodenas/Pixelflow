@@ -7,7 +7,7 @@ add_library (Pixelflow SHARED
     "core/resize.c"
     "hw3/harris_image.c"
     "hw3/panorama_image.c"
-    "hw4/flow_image.c"
+    "opticalflow/flow_image.c"
     "hw5/classifier.c"
     "args.c"
     "data.c"
