@@ -1,4 +1,4 @@
-from uwimg import *
+from pixelflow import *
 
 def draw_corners():
     im = load_image("data/Rainier1.png")

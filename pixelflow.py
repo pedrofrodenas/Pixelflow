@@ -3,7 +3,7 @@ from ctypes import *
 import math
 import random
 
-lib = CDLL(os.path.join(os.path.dirname(__file__), "libuwimg.so"), RTLD_GLOBAL)
+lib = CDLL(os.path.join(os.path.dirname(__file__), "build", "src", "libPixelflow.so"), RTLD_GLOBAL)
 
 def c_array(ctype, values):
     arr = (ctype*len(values))()

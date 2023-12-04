@@ -1,4 +1,4 @@
-from uwimg import *
+from pixelflow import *
 
 def softmax_model(inputs, outputs):
     l = [make_layer(inputs, outputs, SOFTMAX)]
