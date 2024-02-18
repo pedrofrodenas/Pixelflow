@@ -3,6 +3,7 @@
 #include "image.h"
 #include "test.h"
 #include "args.h"
+#include "pfconfig.h"
 
 int main(int argc, char **argv)
 {
