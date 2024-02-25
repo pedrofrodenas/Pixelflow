@@ -3,7 +3,7 @@
 #include <string.h>
 #include <math.h>
 #include <assert.h>
-#include "image.h"
+#include "pixelflow/legacy/image.h"
 #define TWOPI 6.2831853
 
 void l1_normalize(image im)

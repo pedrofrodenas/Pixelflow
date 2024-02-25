@@ -2,8 +2,8 @@
 #include <math.h>
 #include <string.h>
 #include <assert.h>
-#include "matrix.h"
-#include "image.h"
+#include "pixelflow/legacy/matrix.h"
+#include "pixelflow/legacy/image.h"
 #include "test.h"
 #include "args.h"
 

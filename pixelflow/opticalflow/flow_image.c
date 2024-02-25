@@ -3,8 +3,8 @@
 #include <string.h>
 #include <math.h>
 #include <assert.h>
-#include "image.h"
-#include "matrix.h"
+#include "pixelflow/legacy/image.h"
+#include "pixelflow/legacy/matrix.h"
 
 // Draws a line on an image with color corresponding to the direction of line
 // image im: image to draw line on

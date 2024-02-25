@@ -3,8 +3,8 @@
 #include <string.h>
 #include <math.h>
 #include <assert.h>
-#include "image.h"
-#include "matrix.h"
+#include "pixelflow/legacy/image.h"
+#include "pixelflow/legacy/matrix.h"
 #include <time.h>
 
 // Frees an array of descriptors.

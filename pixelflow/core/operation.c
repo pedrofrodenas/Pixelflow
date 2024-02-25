@@ -2,7 +2,7 @@
 #include <string.h>
 #include <assert.h>
 #include <math.h>
-#include "image.h"
+#include "pixelflow/legacy/image.h"
 
 float get_pixel(image im, int c, int h, int w)
 {

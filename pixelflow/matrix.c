@@ -1,4 +1,4 @@
-#include "matrix.h"
+#include "pixelflow/legacy/matrix.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

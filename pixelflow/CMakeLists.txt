@@ -20,9 +20,9 @@ set (pixelflow_SOURCES
 
 # Configure a header file to pass the version settings to the source code
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Pixelflow.h.in"
-               "${CMAKE_CURRENT_BINARY_DIR}/Pixelflow.h")
+               "${CMAKE_CURRENT_SOURCE_DIR}/Pixelflow.h")
 
-configure_file(${PROJECT_SOURCE_DIR}/cmake/templates/pfconfig.h.in ${CMAKE_CURRENT_BINARY_DIR}/pfconfig.h)
+configure_file(${PROJECT_SOURCE_DIR}/cmake/templates/pfconfig.h.in ${CMAKE_CURRENT_SOURCE_DIR}/pfconfig.h)
 
 add_library (Pixelflow SHARED ${pixelflow_SOURCES})
 
@@ -33,18 +33,19 @@ target_compile_features (Pixelflow
 SET_TARGET_PROPERTIES(Pixelflow PROPERTIES SUFFIX .so)
 
 
-cmake_print_variables(CMAKE_CURRENT_BINARY_DIR)
+cmake_print_variables(CMAKE_CURRENT_SOURCE_DIR)
 
 # Add header files to library
 target_include_directories (Pixelflow PRIVATE 
-    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 
 add_executable(tests main.c)
 target_link_libraries(tests Pixelflow)
-target_include_directories(tests PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
+target_include_directories(tests PUBLIC ${CMAKE_SOURCE_DIR})
+
 
 # Moves library and Cmake files to installation folder
 install(TARGETS Pixelflow EXPORT PixelflowTargets

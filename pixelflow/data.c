@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
-#include "image.h"
+#include "pixelflow/legacy/image.h"
 #include "list.h"
 
 data random_batch(data d, int n)

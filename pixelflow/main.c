@@ -1,6 +1,6 @@
 #include <math.h>
 #include <string.h>
-#include "image.h"
+#include "pixelflow/legacy/image.h"
 #include "test.h"
 #include "args.h"
 #include "pfconfig.h"

@@ -1,7 +1,7 @@
 #include <math.h>
 #include <stdlib.h>
-#include "image.h"
-#include "matrix.h"
+#include "pixelflow/legacy/image.h"
+#include "pixelflow/legacy/matrix.h"
 
 // Run an activation function on each element in a matrix,
 // modifies the matrix in place

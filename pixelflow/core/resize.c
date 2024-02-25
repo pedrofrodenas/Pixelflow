@@ -1,5 +1,5 @@
 #include <math.h>
-#include "image.h"
+#include "pixelflow/legacy/image.h"
 
 float nn_interpolate(image im, int c, float h, float w)
 {

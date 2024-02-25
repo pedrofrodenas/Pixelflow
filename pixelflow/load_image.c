@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "image.h"
+#include "pixelflow/legacy/image.h"
 
 image make_empty_image(int c, int h, int w)
 {

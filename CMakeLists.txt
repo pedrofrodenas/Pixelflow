@@ -32,6 +32,7 @@ if(CUDA_FOUND AND WITH_CUDA)
 endif()
 
 add_subdirectory ("pixelflow")
+add_subdirectory ("tests")
 
 
 file(COPY ${CMAKE_SOURCE_DIR}/data DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")

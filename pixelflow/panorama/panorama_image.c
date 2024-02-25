@@ -3,8 +3,8 @@
 #include <string.h>
 #include <math.h>
 #include <assert.h>
-#include "image.h"
-#include "matrix.h"
+#include "pixelflow/legacy/image.h"
+#include "pixelflow/legacy/matrix.h"
 
 // Comparator for matches
 // const void *a, *b: pointers to the matches to compare.
