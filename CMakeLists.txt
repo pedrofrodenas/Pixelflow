@@ -31,7 +31,7 @@ if(CUDA_FOUND AND WITH_CUDA)
     enable_language(CUDA)
 endif()
 
-add_subdirectory ("src")
+add_subdirectory ("pixelflow")
 
 
 file(COPY ${CMAKE_SOURCE_DIR}/data DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")

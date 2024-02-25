@@ -33,13 +33,18 @@ target_compile_features (Pixelflow
 SET_TARGET_PROPERTIES(Pixelflow PROPERTIES SUFFIX .so)
 
 
-cmake_print_variables(CMAKE_CURRENT_SOURCE_DIR)
+cmake_print_variables(CMAKE_CURRENT_BINARY_DIR)
 
 # Add header files to library
-target_include_directories (Pixelflow 
-	PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
-    PRUVATE ${CMAKE_CURRENT_BINARY_DIR}
+target_include_directories (Pixelflow PRIVATE 
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_BINARY_DIR}
 )
+
+
+add_executable(tests main.c)
+target_link_libraries(tests Pixelflow)
+target_include_directories(tests PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
 
 # Moves library and Cmake files to installation folder
 install(TARGETS Pixelflow EXPORT PixelflowTargets
@@ -57,8 +62,6 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 
-add_executable(tests main.c)
-target_link_libraries(tests Pixelflow)
 
 if(CUDA_ENABLED)
      #collect CUDA files
