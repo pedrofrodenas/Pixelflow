@@ -22,9 +22,9 @@ image make_image(int c, int h, int w)
 }
 
 #define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include "pixelflow/legacy/stb_image.h"
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "stb_image_write.h"
+#include "pixelflow/legacy/stb_image_write.h"
 
 void save_image_stb(image im, const char *name, int png)
 {

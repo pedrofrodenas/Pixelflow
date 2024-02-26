@@ -2,7 +2,7 @@
 #include <string.h>
 #include "pixelflow/legacy/image.h"
 #include "test.h"
-#include "args.h"
+#include "pixelflow/legacy/args.h"
 #include "pfconfig.h"
 
 int main(int argc, char **argv)

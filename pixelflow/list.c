@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include "list.h"
+#include "pixelflow/legacy/list.h"
 
 list *make_list()
 {

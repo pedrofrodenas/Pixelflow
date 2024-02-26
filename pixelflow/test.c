@@ -5,7 +5,7 @@
 #include "pixelflow/legacy/matrix.h"
 #include "pixelflow/legacy/image.h"
 #include "test.h"
-#include "args.h"
+#include "pixelflow/legacy/args.h"
 
 
 float avg_diff(image a, image b)
