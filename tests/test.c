@@ -1,12 +1,15 @@
+
+#include "pixelflow/legacy/matrix.h"
+#include "pixelflow/legacy/image.h"
+
+#include "pixelflow/legacy/args.h"
+
+
+#include "test.h"
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
 #include <assert.h>
-#include "pixelflow/legacy/matrix.h"
-#include "pixelflow/legacy/image.h"
-#include "test.h"
-#include "pixelflow/legacy/args.h"
-
 
 float avg_diff(image a, image b)
 {
@@ -146,7 +149,7 @@ void test_get_pixel(){
         TEST(within_eps(247./255, get_pixel(im, 0,1,2), EPS));
         TEST(within_eps(10./255,  get_pixel(im, 1,1,2), EPS));
         TEST(within_eps(246./255, get_pixel(im, 2,1,2), EPS));
-                                                     
+                                                    
         TEST(within_eps(245./255, get_pixel(im, 0,1,3), EPS));
         TEST(within_eps(244./255, get_pixel(im, 1,1,3), EPS));
         TEST(within_eps(11./255,  get_pixel(im, 2,1,3), EPS));
@@ -170,31 +173,31 @@ void test_set_pixel(){
     set_pixel(d, 0, 0, 0, 0/255.);
     set_pixel(d, 1, 0, 0, 1/255.);
     set_pixel(d, 2, 0, 0, 2/255.);
-                         
+                        
     set_pixel(d, 0, 0, 1, 255/255.);
     set_pixel(d, 1, 0, 1, 3/255.);
     set_pixel(d, 2, 0, 1, 4/255.);
-                         
+                        
     set_pixel(d, 0, 0, 2, 5/255.);
     set_pixel(d, 1, 0, 2, 254/255.);
     set_pixel(d, 2, 0, 2, 6/255.);
-                         
+                        
     set_pixel(d, 0, 0, 3, 7/255.);
     set_pixel(d, 1, 0, 3, 8/255.);
     set_pixel(d, 2, 0, 3, 253/255.);
-                         
+                        
     set_pixel(d, 0, 1, 0, 252/255.);
     set_pixel(d, 1, 1, 0, 251/255.);
     set_pixel(d, 2, 1, 0, 250/255.);
-                         
+                        
     set_pixel(d, 0, 1, 1, 9/255.);
     set_pixel(d, 1, 1, 1, 249/255.);
     set_pixel(d, 2, 1, 1, 248/255.);
-                         
+                        
     set_pixel(d, 0, 1, 2, 247/255.);
     set_pixel(d, 1, 1, 2, 10/255.);
     set_pixel(d, 2, 1, 2, 246/255.);
-                         
+                        
     set_pixel(d, 0, 1, 3, 245/255.);
     set_pixel(d, 1, 1, 3, 244/255.);
     set_pixel(d, 2, 1, 3, 11/255.);

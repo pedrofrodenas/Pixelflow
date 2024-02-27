@@ -15,7 +15,6 @@ set (pixelflow_SOURCES
     "list.c"
     "load_image.c"
     "matrix.c"
-    "test.c"
 )
 
 # Configure a header file to pass the version settings to the source code
@@ -42,9 +41,9 @@ target_include_directories (Pixelflow PRIVATE
 )
 
 
-add_executable(tests main.c)
-target_link_libraries(tests Pixelflow)
-target_include_directories(tests PUBLIC ${CMAKE_SOURCE_DIR})
+# add_executable(tests main.c)
+# target_link_libraries(tests Pixelflow)
+# target_include_directories(tests PUBLIC ${CMAKE_SOURCE_DIR})
 
 
 # Moves library and Cmake files to installation folder

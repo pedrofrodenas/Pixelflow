@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+
 inline void LogError(const char* file, int line, const char* message) {
     std::cerr << "file: " 
               << file << "("

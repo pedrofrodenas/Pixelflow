@@ -1,5 +1,11 @@
+
+
 #ifndef TEST_H
 #define TEST_H
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdio.h>
 #define EPS .002
 extern int tests_total;
@@ -15,4 +21,8 @@ void test_hw2();
 void test_hw3();
 void test_hw4();
 void test_hw5();
+
+#ifdef __cplusplus
+}
+#endif
 #endif
