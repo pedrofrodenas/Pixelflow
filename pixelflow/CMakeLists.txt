@@ -52,21 +52,18 @@ endif()
 
 if(CUDA_ENABLED)
     add_library(pixelflow_cuda SHARED ${CUDA_SRC})
+
     target_include_directories(pixelflow_cuda PRIVATE
         ${CMAKE_SOURCE_DIR}
         ${PROJECT_BINARY_DIR}
+        SYSTEM PUBLIC ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES}
         )
 
-    target_include_directories(pixelflow_cuda SYSTEM PUBLIC ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES})
     target_link_libraries(pixelflow_cuda PUBLIC Pixelflow ${CUDA_LIBRARIES})
-    target_compile_definitions(pixelflow_cuda PUBLIC MYMATH_USE_CUDA)
 
-
-    add_executable(mMulShared cuda/imageBlur.cu)
-    target_link_libraries (mMulShared Pixelflow)
-    target_include_directories(mMulShared PUBLIC ${CMAKE_SOURCE_DIR})
-
-    cmake_print_variables(PIXELFLOW_INSTALL_INCLUDE_DIR)
+    add_executable(imageBlur cuda/imageBlur.cu)
+    target_link_libraries (imageBlur pixelflow_cuda)
+    target_include_directories(imageBlur PUBLIC ${CMAKE_SOURCE_DIR})
     
 
     # add_executable(test test.cpp)

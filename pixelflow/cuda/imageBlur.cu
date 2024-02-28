@@ -1,4 +1,4 @@
-#include "pixelflow/legacy/image.h"
+#include "pixelflow/Pixelflow.h"
 #include <iostream>
 #include "cuda_runtime.h"
 
