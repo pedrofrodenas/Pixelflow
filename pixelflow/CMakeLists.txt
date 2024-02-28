@@ -32,7 +32,7 @@ target_compile_features (Pixelflow
 SET_TARGET_PROPERTIES(Pixelflow PROPERTIES SUFFIX .so)
 
 
-cmake_print_variables(CMAKE_CURRENT_SOURCE_DIR)
+cmake_print_variables(CMAKE_SOURCE_DIR)
 
 # Add header files to library
 target_include_directories (Pixelflow PRIVATE 
@@ -41,10 +41,38 @@ target_include_directories (Pixelflow PRIVATE
 )
 
 
-# add_executable(tests main.c)
-# target_link_libraries(tests Pixelflow)
-# target_include_directories(tests PUBLIC ${CMAKE_SOURCE_DIR})
+if(CUDA_ENABLED)
+     #collect CUDA files
+     FILE(GLOB_RECURSE CUDA_SRC  *.cu)
+     FILE(GLOB_RECURSE CUDA_HDR *.h)
+     
+     set(CUDA_SRC ${CUDA_SRC} core/cudaUtils.cpp)
+endif()
 
+
+if(CUDA_ENABLED)
+    add_library(pixelflow_cuda SHARED ${CUDA_SRC})
+    target_include_directories(pixelflow_cuda PRIVATE
+        ${CMAKE_SOURCE_DIR}
+        ${PROJECT_BINARY_DIR}
+        )
+
+    target_include_directories(pixelflow_cuda SYSTEM PUBLIC ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES})
+    target_link_libraries(pixelflow_cuda PUBLIC Pixelflow ${CUDA_LIBRARIES})
+    target_compile_definitions(pixelflow_cuda PUBLIC MYMATH_USE_CUDA)
+
+
+    add_executable(mMulShared cuda/imageBlur.cu)
+    target_link_libraries (mMulShared Pixelflow)
+    target_include_directories(mMulShared PUBLIC ${CMAKE_SOURCE_DIR})
+
+    cmake_print_variables(PIXELFLOW_INSTALL_INCLUDE_DIR)
+    
+
+    # add_executable(test test.cpp)
+    # target_include_directories(test PRIVATE "../include" ${CUDA_HDR})
+    # target_link_libraries (test PRIVATE pixelflow_cuda)
+endif()
 
 # Moves library and Cmake files to installation folder
 install(TARGETS Pixelflow EXPORT PixelflowTargets
@@ -60,46 +88,3 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         PATTERN "*.h"
         PATTERN "*.cuh"
 )
-
-
-
-if(CUDA_ENABLED)
-     #collect CUDA files
-     FILE(GLOB_RECURSE CUDA_SRC  *.cu)
-     FILE(GLOB_RECURSE CUDA_HDR *.h)
-     
-     set(CUDA_SRC ${CUDA_SRC} core/cudaUtils.cpp)
-     
-
-endif()
-
-
-if(CUDA_ENABLED)
-    add_library(pixelflow_cuda SHARED ${CUDA_SRC})
-    target_include_directories(pixelflow_cuda
-        PUBLIC "../include"
-        ${PROJECT_BINARY_DIR}
-        )
-
-    install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        DESTINATION ${PIXELFLOW_INSTALL_INCLUDE_DIR}
-        FILES_MATCHING
-            PATTERN "*.h"
-            PATTERN "*.cuh"
-    )
-
-    cmake_print_variables(PIXELFLOW_INSTALL_INCLUDE_DIR)
-
-    target_include_directories(pixelflow_cuda SYSTEM PUBLIC ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES})
-    target_link_libraries(pixelflow_cuda PUBLIC Pixelflow ${CUDA_LIBRARIES})
-    target_compile_definitions(pixelflow_cuda PUBLIC MYMATH_USE_CUDA)
-
-
-    add_executable(mMulShared cuda/imageBlur.cu)
-    target_include_directories(mMulShared PRIVATE "../include")
-    target_link_libraries (mMulShared PRIVATE Pixelflow)
-
-    # add_executable(test test.cpp)
-    # target_include_directories(test PRIVATE "../include" ${CUDA_HDR})
-    # target_link_libraries (test PRIVATE pixelflow_cuda)
-endif()

@@ -1,7 +1,6 @@
-#include "image.h"
+#include "pixelflow/legacy/image.h"
 #include <iostream>
 #include "cuda_runtime.h"
-#include "helper_cuda.h"
 
 using namespace std;
 
