@@ -1,6 +1,6 @@
 #pragma once
 
-// #ifdef CUDA_ENABLED
+#ifdef CUDA_ENABLED
 
 #include "cuda_runtime.h"
 
@@ -20,4 +20,4 @@ void __PIXELFLOW_CUDA_CHECK(cudaError_t err, const char* file, const int line);
 } // namespace core
 }  // namespace pixelflow
 
-// #endif
+#endif

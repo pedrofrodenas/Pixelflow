@@ -1,0 +1,4 @@
+#pragma once
+
+#cmakedefine CUDA_ENABLED
+// #define MY_VARIABLE @MY_VARIABLE@

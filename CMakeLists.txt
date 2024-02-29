@@ -7,6 +7,8 @@ project (Pixelflow
     LANGUAGES C CXX
 )
 
+option(WITH_CUDA          "Build the CUDA module"                    OFF)
+
 # Set installation paths
 if(UNIX OR CYGWIN)
     include(GNUInstallDirs)
@@ -23,13 +25,12 @@ else()
     set(PIXELFLOW_INSTALL_CMAKE_DIR CMake)
 endif()
 
-find_package(CUDA QUIET)
-cmake_print_variables(CUDA_FOUND)
-cmake_print_variables(WITH_CUDA)
-if(CUDA_FOUND AND WITH_CUDA)
+if(WITH_CUDA)
     set(CUDA_ENABLED ON)
     enable_language(CUDA)
 endif()
+
+cmake_print_variables(WITH_CUDA)
 
 add_subdirectory ("pixelflow")
 add_subdirectory ("tests")
