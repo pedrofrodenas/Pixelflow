@@ -11,13 +11,25 @@
 namespace pixelflow {
 namespace core {
 
-/// Returns the number of available CUDA devices. Returns 0 if Pixelflow is not
-/// compiled with CUDA support.
-int DeviceCount();
+
 
 void __PIXELFLOW_CUDA_CHECK(cudaError_t err, const char* file, const int line);
 
 } // namespace core
 }  // namespace pixelflow
 
+#else
+
+namespace pixelflow {
+namespace core {
+
+/// Returns the number of available CUDA devices. Returns 0 if Pixelflow is not
+/// compiled with CUDA support.
+int DeviceCount();
+} // namespace core
+} // namespace pixelflow
+
+#define PIXELFLOW_CUDA_CHECK(err)
+
 #endif
+

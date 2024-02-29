@@ -5,10 +5,7 @@ target_link_libraries(tests Pixelflow)
 target_include_directories(tests PUBLIC ${CMAKE_SOURCE_DIR})
 
 
-if(CUDA_ENABLED)
-
 add_executable(cudaTest testCuda.cpp)
-target_link_libraries(cudaTest pixelflow_cuda)
+target_link_libraries(cudaTest Pixelflow)
 target_include_directories(cudaTest PUBLIC ${CMAKE_SOURCE_DIR})
-
-endif()
+cmake_print_variables(CMAKE_SOURCE_DIR)
