@@ -5,6 +5,6 @@
 #include "pixelflow/legacy/matrix.h"
 #include "pixelflow/legacy/stb_image_write.h"
 #include "pixelflow/legacy/stb_image.h"
-//#include "pixelflow/legacy/test.h"
 #include "pixelflow/core/cudaUtils.h"
 #include "pixelflow/utility/Logging.h"
+#include "pixelflow/pfconfig.h"

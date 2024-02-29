@@ -38,13 +38,11 @@ cmake_print_variables(CMAKE_SOURCE_DIR)
 target_include_directories (Pixelflow PRIVATE 
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}
+    SYSTEM PUBLIC ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES}
 )
 
 
 if(CUDA_ENABLED)
-     #collect CUDA files
-     FILE(GLOB_RECURSE CUDA_SRC  *.cu)
-     FILE(GLOB_RECURSE CUDA_HDR *.h)
      
      set(CUDA_SRC ${CUDA_SRC} core/cudaUtils.cpp)
 endif()
@@ -61,14 +59,9 @@ if(CUDA_ENABLED)
 
     target_link_libraries(pixelflow_cuda PUBLIC Pixelflow ${CUDA_LIBRARIES})
 
-    add_executable(imageBlur cuda/imageBlur.cu)
-    target_link_libraries (imageBlur pixelflow_cuda)
-    target_include_directories(imageBlur PUBLIC ${CMAKE_SOURCE_DIR})
-    
-
-    # add_executable(test test.cpp)
-    # target_include_directories(test PRIVATE "../include" ${CUDA_HDR})
-    # target_link_libraries (test PRIVATE pixelflow_cuda)
+    # add_executable(imageBlur cuda/imageBlur.cu)
+    # target_link_libraries (imageBlur pixelflow_cuda)
+    # target_include_directories(imageBlur PUBLIC ${CMAKE_SOURCE_DIR})
 endif()
 
 # Moves library and Cmake files to installation folder

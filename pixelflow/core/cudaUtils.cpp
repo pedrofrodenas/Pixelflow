@@ -1,16 +1,15 @@
-#ifdef CUDA_ENABLED
 
 #include "cudaUtils.h"
-
-
 #include <iostream>
+#include "pixelflow/core/cudaUtils.h"
+#include "pixelflow/utility/Logging.h"
 
-#include "../utility/Logging.h"
+#include "cuda_runtime.h"
 
-namespace pf {
-namespace cuda {
+namespace pixelflow {
+namespace core {
 
-int DeviceIds() {
+int DeviceCount() {
     try {
         int num_devices;
         PIXELFLOW_CUDA_CHECK(cudaGetDeviceCount(&num_devices));
@@ -28,10 +27,9 @@ void __PIXELFLOW_CUDA_CHECK(cudaError_t err, const char* file, const int line) {
         LogError(file, line, cudaGetErrorString(err));
     }
 }
-} // namespace cuda
+} // namespace core
 } // namespace pixelflow
 
-#endif
 
 
 
