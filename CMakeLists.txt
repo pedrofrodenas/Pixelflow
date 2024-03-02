@@ -28,6 +28,7 @@ endif()
 if(WITH_CUDA)
     set(CUDA_ENABLED ON)
     enable_language(CUDA)
+    find_package(CUDAToolkit REQUIRED)
 endif()
 
 cmake_print_variables(WITH_CUDA)

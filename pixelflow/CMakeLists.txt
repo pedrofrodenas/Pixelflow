@@ -26,6 +26,10 @@ configure_file(${PROJECT_SOURCE_DIR}/cmake/templates/pfconfig.h.in ${CMAKE_CURRE
 
 add_library (Pixelflow SHARED ${pixelflow_SOURCES})
 
+if(CUDA_ENABLED)
+target_link_libraries(Pixelflow CUDA::cudart CUDA::cublas)
+endif()
+
 target_compile_features (Pixelflow
 	PRIVATE cxx_std_11
 )
@@ -33,7 +37,7 @@ target_compile_features (Pixelflow
 SET_TARGET_PROPERTIES(Pixelflow PROPERTIES SUFFIX .so)
 
 
-cmake_print_variables(CMAKE_SOURCE_DIR)
+cmake_print_variables(CUDA_LIBRARIES)
 
 # Add header files to library
 target_include_directories (Pixelflow PRIVATE 
@@ -41,29 +45,6 @@ target_include_directories (Pixelflow PRIVATE
     ${CMAKE_CURRENT_BINARY_DIR}
     SYSTEM PUBLIC ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES}
 )
-
-
-# if(CUDA_ENABLED)
-     
-#      set(CUDA_SRC ${CUDA_SRC} core/cudaUtils.cpp)
-# endif()
-
-
-# if(CUDA_ENABLED)
-#     add_library(pixelflow_cuda SHARED ${CUDA_SRC})
-
-#     target_include_directories(pixelflow_cuda PRIVATE
-#         ${CMAKE_SOURCE_DIR}
-#         ${PROJECT_BINARY_DIR}
-#         SYSTEM PUBLIC ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES}
-#         )
-
-#     target_link_libraries(pixelflow_cuda PUBLIC Pixelflow ${CUDA_LIBRARIES})
-
-#     # add_executable(imageBlur cuda/imageBlur.cu)
-#     # target_link_libraries (imageBlur pixelflow_cuda)
-#     # target_include_directories(imageBlur PUBLIC ${CMAKE_SOURCE_DIR})
-# endif()
 
 # Moves library and Cmake files to installation folder
 install(TARGETS Pixelflow EXPORT PixelflowTargets
