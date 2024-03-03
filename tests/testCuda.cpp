@@ -9,5 +9,7 @@ int main() {
 
     cout << device << endl;
 
+    pixelflow::core::PfType dtype = pixelflow::core::Float32;
+
     return 0;
 }

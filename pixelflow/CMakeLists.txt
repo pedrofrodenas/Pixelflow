@@ -16,6 +16,7 @@ set (pixelflow_SOURCES
     "load_image.c"
     "matrix.c"
     "core/cudaUtils.cpp"
+    "core/dtypes.cpp"
 )
 
 # Configure a header file to pass the version settings to the source code
@@ -31,7 +32,7 @@ target_link_libraries(Pixelflow CUDA::cudart CUDA::cublas)
 endif()
 
 target_compile_features (Pixelflow
-	PRIVATE cxx_std_11
+	PUBLIC cxx_std_11
 )
 
 SET_TARGET_PROPERTIES(Pixelflow PROPERTIES SUFFIX .so)
