@@ -11,5 +11,7 @@ int main() {
 
     pixelflow::core::PfType dtype = pixelflow::core::Float32;
 
+    cout << dtype.getSize() << endl;
+    
     return 0;
 }

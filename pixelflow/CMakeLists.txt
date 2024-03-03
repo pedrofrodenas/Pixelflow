@@ -17,6 +17,8 @@ set (pixelflow_SOURCES
     "matrix.c"
     "core/cudaUtils.cpp"
     "core/dtypes.cpp"
+    "core/dims.cpp"
+    "core/SmallVector.cpp"
 )
 
 # Configure a header file to pass the version settings to the source code
@@ -32,7 +34,7 @@ target_link_libraries(Pixelflow CUDA::cudart CUDA::cublas)
 endif()
 
 target_compile_features (Pixelflow
-	PUBLIC cxx_std_11
+	PUBLIC cxx_std_14
 )
 
 SET_TARGET_PROPERTIES(Pixelflow PROPERTIES SUFFIX .so)

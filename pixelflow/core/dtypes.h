@@ -40,6 +40,8 @@ public:
     explicit PfType(PfTypeCode dtype_code,
                    int64_t byte_size,
                    const std::string &name);
+
+    int64_t getSize() const { return byte_size; }
 private:
     PfTypeCode dtype_code;
     std::int64_t byte_size;
