@@ -12,6 +12,9 @@ int main() {
     pixelflow::core::PfType dtype = pixelflow::core::Float32;
 
     cout << dtype.getSize() << endl;
-    
+
+    pixelflow::core::ImgSize a = {3, 512, 512};
+
+    cout << a.back() << endl;
     return 0;
 }

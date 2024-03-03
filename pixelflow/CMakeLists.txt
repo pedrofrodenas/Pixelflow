@@ -17,7 +17,7 @@ set (pixelflow_SOURCES
     "matrix.c"
     "core/cudaUtils.cpp"
     "core/dtypes.cpp"
-    "core/dims.cpp"
+    "core/ImgSize.cpp"
     "core/SmallVector.cpp"
 )
 
