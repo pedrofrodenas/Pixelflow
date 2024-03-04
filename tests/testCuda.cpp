@@ -14,7 +14,11 @@ int main() {
     cout << dtype.getSize() << endl;
 
     pixelflow::core::ImgSize a = {3, 512, 512};
+    pixelflow::core::ImgSize b;
+
 
     cout << a.back() << endl;
+
+    cout << b.NumElems() << endl;
     return 0;
 }

@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <string>
+#include <cstring>
 #include <sstream>
 
 #include "pixelflow/utility/Logging.h"
