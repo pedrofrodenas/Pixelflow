@@ -1,7 +1,5 @@
 #include "pixelflow/core/ImgSize.h"
 
-
-
 namespace pixelflow {
 namespace core {
 
@@ -48,6 +46,5 @@ namespace core {
         oss << "[" << Join(this->begin(), this->end(), ", ") << "]";
         return oss.str();
     }
-    
 }
 }
