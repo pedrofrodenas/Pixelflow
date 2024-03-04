@@ -16,9 +16,13 @@ int main() {
     pixelflow::core::ImgSize a = {3, 512, 512};
     pixelflow::core::ImgSize b;
 
+    
 
     cout << a.back() << endl;
 
     cout << b.NumElems() << endl;
+    cout << b.GetDims() << endl;
+
+    cout << a.Shape() << endl;
     return 0;
 }

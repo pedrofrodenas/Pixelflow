@@ -1,5 +1,7 @@
 #include "pixelflow/core/ImgSize.h"
 
+
+
 namespace pixelflow {
 namespace core {
 
@@ -32,8 +34,20 @@ namespace core {
             this->begin(), this->end(), 1LL, f);
     }
 
-    
+    int64_t ImgSize::GetDims() const {
+        if (size() == 0) {
+            LogError("Cannot get length of a 0-dimensional shape.");
+            return 0;
+        } else {
+            return operator[](0);
+        }
+    }
 
+    std::string ImgSize::Shape(){
+        std::ostringstream oss;
+        oss << "[" << Join(this->begin(), this->end(), ", ") << "]";
+        return oss.str();
+    }
     
 }
 }
