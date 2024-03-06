@@ -8,5 +8,6 @@
 #include "pixelflow/core/cudaUtils.h"
 #include "pixelflow/core/dtypes.h"
 #include "pixelflow/core/ShapeArray.h"
+#include "pixelflow/core/Broadcasting.h"
 #include "pixelflow/utility/Logging.h"
 #include "pixelflow/pfconfig.h"

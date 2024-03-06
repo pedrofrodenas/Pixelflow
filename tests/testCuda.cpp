@@ -13,10 +13,9 @@ int main() {
 
     cout << dtype.getSize() << endl;
 
-    pixelflow::core::ShapeArray a = {7, 512, 512, 6};
-    pixelflow::core::ShapeArray b;
+    pixelflow::core::ShapeArray a = {3, 1, 2};
+    pixelflow::core::ShapeArray b =    {5, 1};
 
-    cout << a.back() << endl;
 
     cout << b.NumElems() << endl;
     cout << b.size() << endl;
@@ -24,5 +23,9 @@ int main() {
     cout << a.Shape() << endl;
 
     cout << a.GetDims() << endl;
+
+    bool es = pixelflow::core::IsBroadcastable(a, b);
+    cout << "Es broadcastable: " << es << endl;
+
     return 0;
 }
