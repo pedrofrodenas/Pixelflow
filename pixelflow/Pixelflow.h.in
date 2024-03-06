@@ -7,6 +7,6 @@
 #include "pixelflow/legacy/stb_image.h"
 #include "pixelflow/core/cudaUtils.h"
 #include "pixelflow/core/dtypes.h"
-#include "pixelflow/core/ImgSize.h"
+#include "pixelflow/core/ShapeArray.h"
 #include "pixelflow/utility/Logging.h"
 #include "pixelflow/pfconfig.h"

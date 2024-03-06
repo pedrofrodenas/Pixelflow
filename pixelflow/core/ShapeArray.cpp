@@ -1,28 +1,28 @@
-#include "pixelflow/core/ImgSize.h"
+#include "pixelflow/core/ShapeArray.h"
 
 namespace pixelflow {
 namespace core {
 
-    ImgSize::ImgSize(const std::initializer_list<int64_t>& dim_sizes)
+    ShapeArray::ShapeArray(const std::initializer_list<int64_t>& dim_sizes)
         : parent_v(dim_sizes) {}
 
-    ImgSize::ImgSize(const std::vector<int64_t>& dim_sizes)
+    ShapeArray::ShapeArray(const std::vector<int64_t>& dim_sizes)
         : parent_v(dim_sizes.cbegin(), dim_sizes.cend()) {}
 
-    ImgSize::ImgSize(const ImgSize& other)
+    ShapeArray::ShapeArray(const ShapeArray& other)
         : parent_v(other) {}
 
-    ImgSize& ImgSize::operator=(const ImgSize& v) {
+    ShapeArray& ShapeArray::operator=(const ShapeArray& v) {
         static_cast<parent_v*>(this)->operator=(v);
         return *this;
     }
 
-    ImgSize& ImgSize::operator=(ImgSize&& v) {
+    ShapeArray& ShapeArray::operator=(ShapeArray&& v) {
         static_cast<parent_v*>(this)->operator=(v);
         return *this;
     }
 
-    int64_t ImgSize::NumElems() const {
+    int64_t ShapeArray::NumElems() const {
     if (this->size() == 0) {
         return 1;
     }
@@ -32,19 +32,14 @@ namespace core {
             this->begin(), this->end(), 1LL, f);
     }
 
-    int64_t ImgSize::GetDims() const {
-        if (size() == 0) {
-            LogError("Cannot get length of a 0-dimensional shape.");
-            return 0;
-        } else {
-            return operator[](0);
-        }
+    int64_t ShapeArray::GetDims() const {
+        return this->size();
     }
 
-    std::string ImgSize::Shape(){
+    std::string ShapeArray::Shape(){
         std::ostringstream oss;
         oss << "[" << Join(this->begin(), this->end(), ", ") << "]";
         return oss.str();
     }
-}
-}
+} // namespace core
+} // namespace pixelflow

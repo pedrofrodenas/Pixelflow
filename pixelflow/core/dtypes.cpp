@@ -38,5 +38,5 @@ PfType::PfType(PfTypeCode dtype_code, int64_t byte_size, const std::string &data
     }
 }
 
-}
-}
+} // namespace core
+} // namespace pixelflow

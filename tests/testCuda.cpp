@@ -13,14 +13,16 @@ int main() {
 
     cout << dtype.getSize() << endl;
 
-    pixelflow::core::ImgSize a = {3, 512, 512};
-    pixelflow::core::ImgSize b;
+    pixelflow::core::ShapeArray a = {7, 512, 512, 6};
+    pixelflow::core::ShapeArray b;
 
     cout << a.back() << endl;
 
     cout << b.NumElems() << endl;
-    cout << b.GetDims() << endl;
+    cout << b.size() << endl;
 
     cout << a.Shape() << endl;
+
+    cout << a.GetDims() << endl;
     return 0;
 }

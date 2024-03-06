@@ -17,8 +17,9 @@ set (pixelflow_SOURCES
     "matrix.c"
     "core/cudaUtils.cpp"
     "core/dtypes.cpp"
-    "core/ImgSize.cpp"
+    "core/ShapeArray.cpp"
     "core/SmallVector.cpp"
+    "core/Broadcasting.cpp"
 )
 
 # Configure a header file to pass the version settings to the source code

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <iterator>
 #include <sstream>
 
 inline void LogError(const char* message) {
