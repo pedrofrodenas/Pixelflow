@@ -12,6 +12,9 @@ namespace core {
     ShapeArray::ShapeArray(const ShapeArray& other)
         : parent_v(other) {}
 
+    ShapeArray::ShapeArray(int64_t nElements, int64_t value)
+        : parent_v(nElements, value) {}
+
     ShapeArray& ShapeArray::operator=(const ShapeArray& v) {
         static_cast<parent_v*>(this)->operator=(v);
         return *this;
@@ -36,7 +39,7 @@ namespace core {
         return this->size();
     }
 
-    std::string ShapeArray::Shape(){
+    std::string ShapeArray::Shape() const {
         std::ostringstream oss;
         oss << "[" << Join(this->begin(), this->end(), ", ") << "]";
         return oss.str();

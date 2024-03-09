@@ -22,6 +22,8 @@ public:
 
     ShapeArray(const ShapeArray& other);
 
+    ShapeArray(int64_t nElements, int64_t value);
+
     template <class InputIterator>
     ShapeArray(InputIterator first, InputIterator last)
         : parent_v(first, last) {}
@@ -39,7 +41,7 @@ public:
 
     int64_t GetDims() const;
 
-    std::string Shape();
+    std::string Shape() const;
 };
 
 } // namespace core

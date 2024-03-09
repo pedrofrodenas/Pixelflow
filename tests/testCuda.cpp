@@ -27,5 +27,9 @@ int main() {
     bool es = pixelflow::core::IsBroadcastable(a, b);
     cout << "Es broadcastable: " << es << endl;
 
+    pixelflow::core::ShapeArray d = pixelflow::core::ExpandDims(a, 6);
+
+    cout << d.Shape() << endl;
+
     return 0;
 }
