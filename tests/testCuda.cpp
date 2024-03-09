@@ -16,6 +16,9 @@ int main() {
     pixelflow::core::ShapeArray a = {3, 1, 2};
     pixelflow::core::ShapeArray b =    {5, 1};
 
+    pixelflow::core::ShapeArray aa = {100, 200, 1, 2};
+    pixelflow::core::ShapeArray bb =  {100, 200, 4,2};
+
 
     cout << b.NumElems() << endl;
     cout << b.size() << endl;
@@ -33,7 +36,7 @@ int main() {
 
     pixelflow::core::ShapeArray e(5);
 
-    pixelflow::core::ShapeArray f = pixelflow::core::BroadcastShape(a, b);
+    pixelflow::core::ShapeArray f = pixelflow::core::BroadcastShape(aa, bb);
 
     cout << f.Shape() << endl;
 

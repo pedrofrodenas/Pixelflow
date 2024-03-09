@@ -4,15 +4,17 @@
 #include <iterator>
 #include <sstream>
 
-inline void LogError(const char* message) {
-    std::cerr << message << std::endl;
-}
+#define LogError(message)  LogError_(__FILE__, __LINE__, message)
 
-inline void LogError(const char* file, int line, const char* message) {
-    std::cerr << "file: " 
-              << file << "("
-              << line << ") "
-              << message << std::endl;
+inline void LogError_(const char* file, int line, const char* message) {
+    std::cerr << message << std::endl;
+    std::ostringstream oss;
+    oss <<  "file: " 
+        << file << "("
+        << line << ") "
+        << message << std::endl;
+
+    throw std::runtime_error(oss.str());
 }
 
 template <class InputIterator>
