@@ -20,6 +20,8 @@ set (pixelflow_SOURCES
     "core/ShapeArray.cpp"
     "core/SmallVector.cpp"
     "core/Broadcasting.cpp"
+    "utility/StringUtils.cpp"
+    "core/Device.cpp"
 )
 
 # Configure a header file to pass the version settings to the source code

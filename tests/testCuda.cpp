@@ -40,5 +40,11 @@ int main() {
 
     cout << f.Shape() << endl;
 
+    std::vector<std::string> elem = pixelflow::utility::SplitString("CUDA:0", ":");
+
+    cout << elem[0] << endl;
+
+    pixelflow::core::Device myDevice("CUDA:3");
+
     return 0;
 }

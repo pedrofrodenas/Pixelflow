@@ -9,5 +9,7 @@
 #include "pixelflow/core/dtypes.h"
 #include "pixelflow/core/ShapeArray.h"
 #include "pixelflow/core/Broadcasting.h"
+#include "pixelflow/core/Device.h"
 #include "pixelflow/utility/Logging.h"
+#include "pixelflow/utility/StringUtils.h"
 #include "pixelflow/pfconfig.h"
