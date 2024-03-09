@@ -48,11 +48,25 @@ static int StringToDeviceId(const std::string& type_colon_id) {
 Device::Device(DeviceType device_type, int device_id)
     : device_type_(device_type), device_id_(device_id) {}
 
+Device::Device(std::string device_type, int device_id)
+    : Device(device_type + ":" + std::to_string(device_id)) {}
+
 Device::Device(const std::string& device_and_id)
     : Device(StringToDeviceType(device_and_id),
              StringToDeviceId(device_and_id)) {}
 
+std::vector<Device> GetAvailableCPUDevices() {
+    return {Device(Device::DeviceType::CPU, 0)};
+}
 
+std::vector<Device> GetAvailableCUDADevices() {
+
+    std::vector<Device> devicesFound;
+    for (size_t i = 0; i != cuda::DeviceCount(); ++i) {
+        devicesFound.push_back(Device(Device::DeviceType::CUDA, i));
+    }
+    return devicesFound;
+}
 
 } // namespace core
 } // namespace pixelflow

@@ -6,6 +6,7 @@
 
 namespace pixelflow {
 namespace core {
+namespace cuda {
 
 int DeviceCount() {
 #ifdef CUDA_ENABLED
@@ -32,6 +33,7 @@ void __PIXELFLOW_CUDA_CHECK(cudaError_t err, const char* file, const int line) {
 }
 #endif
 
+} // namespace cuda
 } // namespace core
 } // namespace pixelflow
 
