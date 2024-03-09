@@ -56,12 +56,31 @@ namespace core {
         int64_t lDims = l.GetDims();
         int64_t rDims = r.GetDims();
 
-
         int64_t maxShape = std::max(lDims, rDims);
 
-        ShapeArray largestArray;
-        
-        return l;
+        ShapeArray lExpanded = ExpandDims(l, maxShape);
+        ShapeArray rExpanded = ExpandDims(r, maxShape);
+
+        ShapeArray outputArray(maxShape);
+        for (size_t i = 0; i != maxShape; ++i)
+        {
+            if (lExpanded[i] == 1)
+            {
+                outputArray[i] = rExpanded[i];
+            }
+            else if (rExpanded[i] == 1)
+            {
+                outputArray[i] = lExpanded[i];
+            }
+            else if (lExpanded[i] == rExpanded[i])
+            {
+                outputArray[i] = lExpanded[i];
+            }
+            else {
+                LogError("Some bug happend in BroadcastShape in BroadCasting.cpp");
+            }
+        }
+        return outputArray;
     }
 
 

@@ -31,5 +31,11 @@ int main() {
 
     cout << d.Shape() << endl;
 
+    pixelflow::core::ShapeArray e(5);
+
+    pixelflow::core::ShapeArray f = pixelflow::core::BroadcastShape(a, b);
+
+    cout << f.Shape() << endl;
+
     return 0;
 }

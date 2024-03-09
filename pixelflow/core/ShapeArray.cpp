@@ -12,6 +12,9 @@ namespace core {
     ShapeArray::ShapeArray(const ShapeArray& other)
         : parent_v(other) {}
 
+    ShapeArray::ShapeArray(int64_t numElements)
+        : parent_v(numElements) {}
+
     ShapeArray::ShapeArray(int64_t nElements, int64_t value)
         : parent_v(nElements, value) {}
 

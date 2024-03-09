@@ -22,6 +22,8 @@ public:
 
     ShapeArray(const ShapeArray& other);
 
+    ShapeArray(int64_t numElements);
+
     ShapeArray(int64_t nElements, int64_t value);
 
     template <class InputIterator>
