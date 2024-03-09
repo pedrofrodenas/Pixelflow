@@ -5,7 +5,7 @@ using namespace std;
 
 int main() {
 
-    int device = pixelflow::core::DeviceCount();
+    int device = pixelflow::core::cuda::DeviceCount();
 
     cout << device << endl;
 

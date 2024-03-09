@@ -55,6 +55,17 @@ Device::Device(const std::string& device_and_id)
     : Device(StringToDeviceType(device_and_id),
              StringToDeviceId(device_and_id)) {}
 
+std::vector<Device> GetAvailableDevices() {
+    const std::vector<Device> cpu_devices = Device::GetAvailableCPUDevices();
+    const std::vector<Device> gpu_devices = Device::GetAvailableCUDADevices();
+
+    std::vector<Device> devices;
+
+    devices.insert(devices.end(), cpu_devices.begin(), cpu_devices.end());
+    devices.insert(devices.end(), gpu_devices.begin(), gpu_devices.end());
+    return devices;
+}
+
 std::vector<Device> GetAvailableCPUDevices() {
     return {Device(Device::DeviceType::CPU, 0)};
 }
