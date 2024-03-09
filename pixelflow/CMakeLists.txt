@@ -15,13 +15,13 @@ set (pixelflow_SOURCES
     "list.c"
     "load_image.c"
     "matrix.c"
+    "core/Device.cpp"
     "core/cudaUtils.cpp"
     "core/dtypes.cpp"
     "core/ShapeArray.cpp"
     "core/SmallVector.cpp"
     "core/Broadcasting.cpp"
     "utility/StringUtils.cpp"
-    "core/Device.cpp"
 )
 
 # Configure a header file to pass the version settings to the source code

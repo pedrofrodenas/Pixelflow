@@ -28,7 +28,7 @@ int DeviceCount() {
 #ifdef CUDA_ENABLED
 void __PIXELFLOW_CUDA_CHECK(cudaError_t err, const char* file, const int line) {
     if (err != cudaSuccess) {
-        LogError(file, line, cudaGetErrorString(err));
+        LogError_(file, line, cudaGetErrorString(err));
     }
 }
 #endif

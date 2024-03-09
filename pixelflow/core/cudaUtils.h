@@ -5,7 +5,7 @@
 #include "cuda_runtime.h"
 
 #define PIXELFLOW_CUDA_CHECK(err) \
-    pixelflow::core::__PIXELFLOW_CUDA_CHECK(err, __FILE__, __LINE__)
+    pixelflow::core::cuda::__PIXELFLOW_CUDA_CHECK(err, __FILE__, __LINE__)
 
 
 namespace pixelflow {
