@@ -12,4 +12,5 @@
 #include "pixelflow/core/cudaUtils.h"
 #include "pixelflow/utility/Logging.h"
 #include "pixelflow/utility/StringUtils.h"
+#include "pixelflow/core/Image.h"
 #include "pixelflow/pfconfig.h"

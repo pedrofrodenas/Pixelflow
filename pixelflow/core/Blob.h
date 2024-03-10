@@ -5,6 +5,18 @@
 namespace pixelflow {
 namespace core {
 
+// Adapted for Pixelflow from Open3D project.
+// Commit e39c1e0994ac2adabd8a617635db3e35f04cce88 2023-03-10
+// Documentation:
+// https://www.open3d.org/docs/0.15.1/cpp_api/classopen3d_1_1core_1_1_memory_manager.html
+//
+//===- Open3d/cpp/open3d/core/MemoryManager.h -===//
+// ----------------------------------------------------------------------------
+// -                        Open3D: www.open3d.org                            -
+// ----------------------------------------------------------------------------
+// Copyright (c) 2018-2023 www.open3d.org
+// SPDX-License-Identifier: MIT
+// ----------------------------------------------------------------------------
 class Blob {
 
 public:

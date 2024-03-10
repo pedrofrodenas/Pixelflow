@@ -59,5 +59,21 @@ protected:
     int device_id_ = 0;   
 };
 
+class IsDevice {
+public:
+    IsDevice() = default;
+    virtual ~IsDevice() = default;
+
+    virtual Device GetDevice() const = 0;
+
+    inline bool isCPU() const {
+        return (GetDevice().GetType() == Device::DeviceType::CPU);
+    }
+
+    inline bool isCUDA() const {
+        return (GetDevice().GetType() == Device::DeviceType::CUDA);
+    }
+};
+
 } // namespace core
 } // namespace pixelflow

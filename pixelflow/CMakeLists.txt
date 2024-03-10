@@ -24,6 +24,8 @@ set (pixelflow_SOURCES
     "core/MemoryManagerCPU.cpp"
     "core/Broadcasting.cpp"
     "utility/StringUtils.cpp"
+	"core/Image.cpp"
+	"core/Image.h"
 )
 
 # Configure a header file to pass the version settings to the source code

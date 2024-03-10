@@ -1,6 +1,8 @@
 #include "pixelflow/Pixelflow.h"
 #include <iostream>
 
+#include "pixelflow/core/Image.h"
+
 using namespace std;
 
 int main() {
@@ -47,6 +49,12 @@ int main() {
     std::vector<pixelflow::core::Device> res = pixelflow::core::Device::GetAvailableDevices();
 
     pixelflow::core::Device::PrintAvailableDevices();
+
+    pixelflow::core::ShapeArray strides = pixelflow::core::DefaultStrides({5, 5, 3});
+
+    cout << strides.Shape() << endl;
+
+    pixelflow::core::Image img({5,5,3}, pixelflow::core::Float32, pixelflow::core::Device());
 
     return 0;
 }

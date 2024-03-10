@@ -83,6 +83,17 @@ namespace core {
         return outputArray;
     }
 
+    ShapeArray DefaultStrides(const ShapeArray& shape) {
+        ShapeArray strides(static_cast<int64_t>(shape.size()));
+        int64_t stride_size = 1;
+        for (auto i = static_cast<int64_t>(shape.size()); i > 0; --i) {
+            strides[i - 1] = stride_size;
+            // Handles 0-sized dimensions
+            stride_size *= std::max<int64_t>(shape[i - 1], 1);
+        }
+        return strides;
+    }
+
 
 
 } // namespace core
