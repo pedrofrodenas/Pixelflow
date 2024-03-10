@@ -41,12 +41,18 @@ public:
     // Returns true iff device type is CUDA.
     inline bool IsCUDA() const { return device_type_ == DeviceType::CUDA; }
 
+    // Returns string representation of device, e.g. "CPU:0", "CUDA:0".
+    std::string ToString() const;
+
     // Returns a vector of available devices.
     static std::vector<Device> GetAvailableDevices();
 
     static std::vector<Device> GetAvailableCPUDevices();
     // Return a vector of CUDA devices
     static std::vector<Device> GetAvailableCUDADevices();
+
+    // Print all available devices.
+    static void PrintAvailableDevices();
 
 protected:
     DeviceType device_type_ = DeviceType::CPU;

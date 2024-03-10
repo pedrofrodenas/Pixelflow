@@ -44,14 +44,9 @@ int main() {
 
     cout << elem[0] << endl;
 
-    pixelflow::core::Device myDevice("CUDA:3");
-
     std::vector<pixelflow::core::Device> res = pixelflow::core::Device::GetAvailableDevices();
 
-    cout << "Devices: " << endl;
-    for (auto it = res.begin(); it != res.end(); ++it) {
-        cout << it->IsCUDA() << endl;
-    }
+    pixelflow::core::Device::PrintAvailableDevices();
 
     return 0;
 }

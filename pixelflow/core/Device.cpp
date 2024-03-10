@@ -79,5 +79,30 @@ std::vector<Device> Device::GetAvailableCUDADevices() {
     return devicesFound;
 }
 
+std::string Device::ToString() const {
+    std::string device = "";
+    switch (device_type_)
+    {
+    case DeviceType::CPU:
+        device += "CPU";
+        break;
+    case DeviceType::CUDA:
+        device += "CUDA";
+        break;
+    default:
+        LogError("Not supported device type");
+        break;
+    }
+    device += ":" + std::to_string(device_id_);
+    return device;
+}
+
+void Device::PrintAvailableDevices() {
+    std::vector<Device> devices = GetAvailableDevices();
+    for (const Device &d : devices) {
+        std::cout << "Device: " << d.ToString();
+    }
+}
+
 } // namespace core
 } // namespace pixelflow
