@@ -20,6 +20,8 @@ set (pixelflow_SOURCES
     "core/dtypes.cpp"
     "core/ShapeArray.cpp"
     "core/SmallVector.cpp"
+    "core/MemoryManager.cpp"
+    "core/MemoryManagerCPU.cpp"
     "core/Broadcasting.cpp"
     "utility/StringUtils.cpp"
 )
