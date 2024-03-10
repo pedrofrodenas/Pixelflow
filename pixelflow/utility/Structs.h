@@ -2,6 +2,9 @@
 
 #include <cstddef>
 
+namespace pixelflow {
+namespace utility {
+
 // Hash function for enum class for C++ standard less than C++14
 // https://stackoverflow.com/a/24847480/1255535
 struct hash_enum_class {
@@ -10,3 +13,6 @@ struct hash_enum_class {
         return static_cast<std::size_t>(t);
     }
 };
+} // namespace utility
+} // namespace pixelflow
+
