@@ -14,6 +14,40 @@ void MemoryManager::Free(void* ptr, const Device& device) {
     memory_manager->Free(ptr, device);
 }
 
+void MemoryManager::Memcpy(void* dst_ptr,
+                           const Device& dst_device,
+                           const void* src_ptr,
+                           const Device& src_device,
+                           size_t num_bytes) {
+    if (num_bytes == 0) {
+        return;
+    }
+    if ( (dst_ptr == nullptr) || (src_ptr == nullptr)) {
+        LogError("src_ptr and dst_ptr cannot be nullptr.");
+    }
+    std::shared_ptr<MemoryManagerDevice> memory_manager;
+
+    // CPU memory manager
+    if (src_device.IsCPU() && dst_device.IsCPU()) {
+        memory_manager = GetMemoryManagerDevice(src_device);
+    }
+    else if (src_device.IsCPU() && dst_device.IsCUDA()) {
+        memory_manager = GetMemoryManagerDevice(dst_device);
+    }
+    else if (src_device.IsCUDA() && dst_device.IsCPU()) {
+        memory_manager = GetMemoryManagerDevice(src_device);
+    }
+    else if (src_device.IsCUDA() && dst_device.IsCUDA()) {
+        memory_manager = GetMemoryManagerDevice(src_device);
+    }
+    else {
+        std::ostringstream oss;
+        oss << "Unsupported device type from " << src_device.ToString() << " to " << dst_device.ToString();
+        LogError(oss.str().c_str());
+    }
+    memory_manager->Memcpy(dst_ptr, dst_device, src_ptr, src_device, num_bytes);
+    }
+
 std::shared_ptr<MemoryManagerDevice> MemoryManager::GetMemoryManagerDevice(const Device& device){
     // We are going to define an unordered_map that holds as a key 
     // Device::DeviceType as a value shared_pointers to MemoryManagerDevice 
