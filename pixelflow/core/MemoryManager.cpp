@@ -3,6 +3,17 @@
 namespace pixelflow {
 namespace core {
 
+void* MemoryManager::Malloc(size_t byte_size, const Device& device) {
+    std::shared_ptr<MemoryManagerDevice> memory_manager = GetMemoryManagerDevice(device);
+    void* ptr = memory_manager->Malloc(byte_size, device);
+    return ptr;
+}
+
+void MemoryManager::Free(void* ptr, const Device& device) {
+    std::shared_ptr<MemoryManagerDevice> memory_manager = GetMemoryManagerDevice(device);
+    memory_manager->Free(ptr, device);
+}
+
 std::shared_ptr<MemoryManagerDevice> MemoryManager::GetMemoryManagerDevice(const Device& device){
     // We are going to define an unordered_map that holds as a key 
     // Device::DeviceType as a value shared_pointers to MemoryManagerDevice 
