@@ -1,6 +1,7 @@
 #pragma once
 
 #include "pixelflow/core/Device.h"
+#include "pixelflow/utility/Structs.h"
 
 namespace pixelflow {
 namespace core {
@@ -17,6 +18,39 @@ namespace core {
 // Copyright (c) 2018-2023 www.open3d.org
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
+
+class MemoryManagerDevice;
+
+/// Top-level memory interface. Calls to any of the member functions will
+/// automatically dispatch the appropriate MemoryManagerDevice instance based on
+/// the provided device which is used to execute the requested functionality.
+///
+/// The memory managers are dispatched as follows:
+///
+/// DeviceType = CPU : MemoryManagerCPU
+/// DeviceType = CUDA :
+///   ENABLE_CACHED_CUDA_MANAGER = ON : MemoryManagerCached w/ MemoryManagerCUDA
+///   Otherwise :                      MemoryManagerCUDA
+///
+class MemoryManager {
+public:
+    /// Allocates memory of \p byte_size bytes on device \p device and returns a
+    /// pointer to the beginning of the allocated memory block.
+    static void* Malloc(size_t byte_size, const Device& device);
+
+    /// Frees previously allocated memory at address \p ptr on device \p device.
+    static void Free(void* ptr, const Device& device);
+
+    /// Copies \p num_bytes bytes of memory at address \p src_ptr on device
+    /// \p src_device to address \p dst_ptr on device \p dst_device.
+    static void Memcpy(void* dst_ptr,
+                       const Device& dst_device,
+                       const void* src_ptr,
+                       const Device& src_device,
+                       size_t num_bytes);
+};
+
+
 class MemoryManagerDevice {
 public:
     virtual ~MemoryManagerDevice() = default;
@@ -45,9 +79,9 @@ public:
 
     void Memcpy(void* dst_ptr,
                 const Device& dst_device,
-                void* src_ptr,
+                const void* src_ptr,
                 const Device& src_device,
-                size_t num_bytes);
+                size_t num_bytes) override;
 };
 
 
