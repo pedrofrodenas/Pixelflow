@@ -38,8 +38,6 @@ protected:
 
     /// Underlying memory buffer for Tensor.
     std::shared_ptr<Blob> blob_ = nullptr;
-
-
 };
 
 }

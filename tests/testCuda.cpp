@@ -54,7 +54,7 @@ int main() {
 
     cout << strides.Shape() << endl;
 
-    pixelflow::core::Image img({5,5,3}, pixelflow::core::Float32, pixelflow::core::Device());
+    pixelflow::core::Image img({5,5,3}, pixelflow::core::Float32, pixelflow::core::Device("CPU:0"));
 
     return 0;
 }
