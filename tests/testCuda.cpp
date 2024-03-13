@@ -56,5 +56,8 @@ int main() {
 
     pixelflow::core::Image img({5,5,3}, pixelflow::core::Float32, pixelflow::core::Device("CPU:0"));
 
+    // Define a Image with initial values
+    pixelflow::core::Image img1(vector<int>{3,4,6}, {3}, pixelflow::core::Float32,
+        pixelflow::core::Device("CPU:0"));
     return 0;
 }
