@@ -55,7 +55,7 @@ public:
     /// Same as Memcpy, but with host (CPU:0) as default src_device.
     static void MemcpyFromHost(void* dst_ptr,
                                const Device& dst_device,
-                               void* host_ptr,
+                               const void* host_ptr,
                                size_t num_bytes);
 
     /// Same as Memcpy, but with host (CPU:0) as default dst_device.

@@ -8,6 +8,7 @@
 #include "pixelflow/core/ShapeArray.h"
 #include "pixelflow/core/dtypes.h"
 #include "pixelflow/core/Blob.h"
+#include "pixelflow/core/MemoryManager.h"
 
 namespace pixelflow {
 namespace core {
