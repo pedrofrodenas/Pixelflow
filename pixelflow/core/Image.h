@@ -17,6 +17,8 @@ class Image : public IsDevice{
 
 public:
 
+    Image() {}
+
     // Contiguos memory Image constructor
     Image(const ShapeArray& shape,
           PfType dtype,
@@ -56,6 +58,52 @@ public:
     }
 
     Device GetDevice() const override;
+
+    inline ShapeArray Shape() const {return shape_;}
+
+    inline void* GetDataPtr() {return data_ptr_;}
+    inline const void* GetDataPtr() const {return data_ptr_;}
+
+    inline int64_t NumElements() const { return shape_.NumElems(); }
+
+    inline int64_t NumDims() const { return shape_.GetDims(); }
+
+
+    /// Iterator for Image.
+    struct Iterator {
+        using iterator_category = std::forward_iterator_tag;
+        using difference_type = std::ptrdiff_t;
+        using value_type = Image;
+        using pointer = value_type*;
+        using reference = value_type;  // Typically Image&, but a image slice
+        // creates a new Image object with
+        // shared memory.
+
+        // Iterator must be constructible, copy-constructible, copy-assignable,
+        // destructible and swappable.
+        Iterator(pointer image, int64_t index);
+        Iterator(const Iterator&);
+        ~Iterator();
+        Iterator& operator++();
+        Iterator operator++(int);
+        bool operator==(const Iterator& other) const;
+        bool operator!=(const Iterator& other) const;
+
+    private:
+        struct Impl;
+        std::unique_ptr<Impl> impl_;
+    };
+
+    /// Returns the beginning of the tensor iterator. The iterator iterates over
+    /// the first dimension of the tensor. The generated tensor slices share the
+    /// same memory with the original tensor.
+    Iterator begin();
+
+    /// Returns the end of the tensor iterator. The iterator iterates over the
+    /// first dimension of the tensor. The generated tensor slices share the
+    /// same memory with the original tensor.
+    Iterator end();
+
 
 protected:
     /// The shape of the image
