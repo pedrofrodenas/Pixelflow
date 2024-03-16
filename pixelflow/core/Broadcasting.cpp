@@ -94,6 +94,25 @@ namespace core {
         return strides;
     }
 
+    int64_t WrapDim(int64_t dim, const int64_t max_dim) {
+
+        if (max_dim <= 0) {
+            LogError("max_dim should be greater than zero");
+        }
+
+        int64_t min = -max_dim;
+
+        if (dim < min || dim > max_dim) {
+            LogError("Index out of range");
+        }
+
+        if (dim < 0) {
+            dim += max_dim;
+        }
+        return dim;
+    }
+
+
 
 
 } // namespace core
