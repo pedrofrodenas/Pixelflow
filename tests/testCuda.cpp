@@ -54,7 +54,7 @@ int main() {
 
     cout << strides.Shape() << endl;
 
-    pixelflow::core::Image img({5,5,3}, pixelflow::core::Float32, pixelflow::core::Device("CPU:0"));
+    pixelflow::core::Image img({5,4,3}, pixelflow::core::Float32, pixelflow::core::Device("CPU:0"));
 
     // Define a Image with initial values
     pixelflow::core::Image img1(vector<int>{3,4,6}, {3}, pixelflow::core::PfType::Int32,
@@ -73,6 +73,20 @@ int main() {
     cout << "Image shape at dim 1: " << img.GetShape(1) << endl;
 
     cout << "Image stride at dim 0: " << img.GetStride(0) << endl;
+
+    pixelflow::core::ShapeArray g = {1, 0, 2};
+
+    int64_t ndims_ = g.GetDims();
+    bool conditio = std::all_of(g.begin(), g.end(),
+                                    [ndims_](int64_t d) { return d <= (ndims_-1); });
+
+    cout << "Ndims: " << ndims_ << endl;
+    cout << conditio << endl;
+
+    pixelflow::core::ImageRef ref(img);
+    ref.Permute(pixelflow::core::ShapeArray {1,0,2});
+
+    cout << ref.shape_[0] << endl;
 
     return 0;
 }
