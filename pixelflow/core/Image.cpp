@@ -3,6 +3,61 @@
 namespace pixelflow {
 namespace core {
 
+    Image Image::Slice(int64_t dim, int64_t start, int64_t stop, int64_t step) {
+
+        if (shape_.GetDims() == 0) {
+            LogError("Image is 0-dim");
+        }
+
+        if (step <= 0) {
+            LogError("Step cannot be 0 or less");
+        }
+
+        // Convert dim to positive counterpart
+        dim = WrapDim(dim, shape_.GetDims());
+
+        // Firstly warp start
+        if (start < 0) {
+            start += shape_[dim];
+        }
+        // If after warping is still negative, put the default value
+        if (start < 0) {
+            start = 0;
+        }
+        // If start is greater than lenght of image in this dimensions, empty image
+        else if (start >= shape_[dim]) {
+            start = shape_[dim];
+        }
+
+        // Firstly warp stop
+        if (stop < 0) {
+            stop += shape_[dim];
+        }
+        // If stop is behing start, empty image
+        if (stop <= start) {
+            stop = start;
+        }
+        else if (stop >= shape_[dim]) {
+            stop = shape_[dim];
+        }
+
+        // Get data pointer to the possition selected
+        // treat the pointer as pointing to a sequence of bytes
+        // (char is 1 byte in C++). This way, you can perform arithmetic
+        // operations on the pointer.
+        void* new_data_ptr = static_cast<char*>(data_ptr_) + (start * strides_[dim] * dtype_.getSize());
+
+        ShapeArray new_shape = shape_;
+        ShapeArray new_stride = strides_;
+
+        // Update shape and stride
+        new_shape[dim] = (stop - start + step - 1) / step;
+        new_stride[dim] = strides_[dim] * step;
+
+        return Image(new_shape, new_stride, new_data_ptr, dtype_, blob_);
+    }
+
+
     Device Image::GetDevice() const {
 
         if (blob_ == nullptr) {

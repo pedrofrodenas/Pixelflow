@@ -57,6 +57,18 @@ public:
                              init_vals.size() * dtype.getSize());
     }
 
+    /// The fully specified constructor. Since you're responsible for creating
+    /// the Blob, take care of Blob's deleter if the memory is allocated
+    /// elsewhere. See Blob.h for more details.
+    Image(const ShapeArray& shape,
+          const ShapeArray& stride,
+          void* data_ptr,
+          PfType dtype,
+          const std::shared_ptr<Blob>& blob)
+              : shape_(shape), strides_(stride),
+                data_ptr_(data_ptr), dtype_(dtype),
+                blob_(blob) {}
+
     Device GetDevice() const override;
 
     inline ShapeArray Shape() const {return shape_;}
@@ -67,6 +79,14 @@ public:
     inline int64_t NumElements() const { return shape_.NumElems(); }
 
     inline int64_t NumDims() const { return shape_.GetDims(); }
+
+    /// Slice Image.
+    ///
+    /// \param dim The dimension to slice.
+    /// \param start The start index (inclusive).
+    /// \param stop The end index (exclusive).
+    /// \param step Pick one element for every \p step elements.
+    Image Slice(int64_t dim, int64_t start, int64_t stop, int64_t step);
 
 
     /// Iterator for Image.

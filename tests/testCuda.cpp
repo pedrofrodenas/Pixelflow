@@ -66,5 +66,9 @@ int main() {
         cout << "Hola" << endl;
     }
 
+    pixelflow::core::Image img2 = img.Slice(0, 1, 5, 2);
+
+
+
     return 0;
 }
