@@ -70,7 +70,9 @@ int main() {
 
     cout << "img contiguous?: " << img.IsContiguous() << " img2 contiguous?: " << img2.IsContiguous() << endl;
 
+    cout << "Image shape at dim 1: " << img.GetShape(1) << endl;
 
+    cout << "Image stride at dim 0: " << img.GetStride(0) << endl;
 
     return 0;
 }

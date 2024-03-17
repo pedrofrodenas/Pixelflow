@@ -13,4 +13,5 @@
 #include "pixelflow/utility/Logging.h"
 #include "pixelflow/utility/StringUtils.h"
 #include "pixelflow/core/Image.h"
+#include "pixelflow/core/Indexer.h"
 #include "pixelflow/pfconfig.h"
