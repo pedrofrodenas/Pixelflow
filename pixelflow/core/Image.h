@@ -26,7 +26,7 @@ public:
               : shape_(shape),
                 strides_(DefaultStrides(shape)),
                 dtype_(dtype),
-                blob_(std::make_shared<Blob>(shape.NumElems()*dtype.getSize(),device)) {
+                blob_(std::make_shared<Blob>(shape.NumElements()*dtype.getSize(),device)) {
         data_ptr_ = blob_->GetDataPtr();
     }
 
@@ -69,6 +69,10 @@ public:
                 data_ptr_(data_ptr), dtype_(dtype),
                 blob_(blob) {}
 
+    inline bool IsContiguous() const {
+        return strides_ == DefaultStrides(shape_);
+    }
+
     Device GetDevice() const override;
 
     inline ShapeArray Shape() const {return shape_;}
@@ -76,7 +80,7 @@ public:
     inline void* GetDataPtr() {return data_ptr_;}
     inline const void* GetDataPtr() const {return data_ptr_;}
 
-    inline int64_t NumElements() const { return shape_.NumElems(); }
+    inline int64_t NumElements() const { return shape_.NumElements(); }
 
     inline int64_t NumDims() const { return shape_.GetDims(); }
 

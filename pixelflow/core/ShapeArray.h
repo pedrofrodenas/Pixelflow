@@ -39,7 +39,7 @@ public:
     // Move operator (without const)
     ShapeArray& operator=(ShapeArray&& v);
 
-    int64_t NumElems() const;
+    int64_t NumElements() const;
 
     int64_t GetDims() const;
 

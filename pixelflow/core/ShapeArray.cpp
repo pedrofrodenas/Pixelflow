@@ -28,7 +28,7 @@ namespace core {
         return *this;
     }
 
-    int64_t ShapeArray::NumElems() const {
+    int64_t ShapeArray::NumElements() const {
     if (this->size() == 0) {
         return 1;
     }

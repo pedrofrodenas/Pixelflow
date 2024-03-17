@@ -22,7 +22,7 @@ int main() {
     pixelflow::core::ShapeArray bb =  {100, 200, 4,2};
 
 
-    cout << b.NumElems() << endl;
+    cout << b.NumElements() << endl;
     cout << b.size() << endl;
 
     cout << a.Shape() << endl;
@@ -67,6 +67,8 @@ int main() {
     }
 
     pixelflow::core::Image img2 = img.Slice(0, 1, 5, 2);
+
+    cout << "img contiguous?: " << img.IsContiguous() << " img2 contiguous?: " << img2.IsContiguous() << endl;
 
 
 
