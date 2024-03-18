@@ -148,6 +148,18 @@ public:
             DtypePolicy dtype_policy = DtypePolicy::ALL_SAME,
             const ShapeArray& reduction_dims = {});
 
+    /// Symmetrical to BroadcastRestride. Set the reduced dimensions' stride to
+    /// 0 at output. Currently only support the keepdim=true case.
+    static void ReductionRestride(ImageRef& dst,
+                                  int64_t src_ndims,
+                                  const int64_t* src_shape,
+                                  const ShapeArray& reduction_dims);
+
+    // Permute reduction dimensions to front.
+    // TODO: Sort the dimensions based on strides in ascending orderto improve
+    // thread coalescing.
+    void ReorderDimensions(const ShapeArray& reduction_dims);
+
 protected:
 
     /// Number of input and output Tensors.
