@@ -91,6 +91,27 @@ namespace core {
         } else {
             LogError("Unimplemented dtype policy");
         }
+
+        // Convert inputs and outputs to ImageRef
+        for (int64_t i = 0; i != num_inputs_; ++i) {
+            inputs_[i] = ImageRef(input_images[i]);
+        }
+        for (int64_t i = 0; i != num_outputs_; ++i) {
+            outputs_[i] = ImageRef(output_images[i]);
+        }
+
+        // For simplicity, all outputs must have the same shape.
+        ShapeArray ref_output_shape = output_images[0].Shape();
+        for (const auto& output_image : output_images) {
+            if (output_image.Shape() != ref_output_shape) {
+                std::ostringstream oss;
+                oss << "For broadcast, all output shapes must be the same, "
+                << "but " << output_image.Shape().ToString()
+                << " != " << ref_output_shape.ToString();
+                LogError(oss.str().c_str());
+            }
+        }
+
     }
 
 

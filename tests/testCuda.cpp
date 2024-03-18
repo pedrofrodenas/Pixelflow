@@ -91,7 +91,9 @@ int main() {
 
     pixelflow::core::ImageRef ref2(img);
 
-    cout << "Are equal ref and ref2 ?: " << (ref == ref2) << endl;
+    pixelflow::core::ShapeArray reducted = pixelflow::core::ReductionShape(aa, {0, 2}, true);
+
+    cout << reducted.ToString() << endl;
 
     return 0;
 }

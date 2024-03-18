@@ -24,5 +24,14 @@ namespace core {
     /// \param max_dim Maximum dimension index
     int64_t WrapDim(int64_t dim, int64_t max_dim);
 
+    /// \brief Returns the shape after reduction.
+    ///
+    /// \param src_shape shape to reduce
+    /// \param dims A list of dimensions to be reduced.
+    /// \param keepdim If true, the reduced dims will be retained as size 1.
+    ShapeArray ReductionShape(const ShapeArray& src_shape,
+                              const ShapeArray& dims,
+                              bool keepdim);
+
 } // namespace core
 } // namespace pixelflow

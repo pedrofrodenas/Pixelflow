@@ -94,6 +94,41 @@ namespace core {
         return strides;
     }
 
+    ShapeArray ReductionShape(const ShapeArray &src_shape,
+                              const ShapeArray &dims,
+                              bool keepdim) {
+
+        int64_t src_dims = src_shape.GetDims();
+        ShapeArray out_shape(src_shape);
+
+        if (keepdim) {
+            for (const int64_t& dim : dims) {
+                out_shape[WrapDim(dim, src_dims)] = 1;
+            }
+        }
+        else {
+            // If dim i is reduced, dims_mask[i] == true.
+            std::vector<bool> dims_mask(src_dims, false);
+            for (const int64_t dim : dims) {
+                if (dims_mask[WrapDim(dim, src_dims)]) {
+                    LogError("Repeated reduction dimension");
+                }
+                dims_mask[WrapDim(dim, src_dims)] = true;
+            }
+            // Copy to out_shape only possitions not specified in dims
+            int64_t to_fill = 0;
+            for (int64_t i = 0; i != src_dims; ++i) {
+                if (!dims_mask[i]) {
+                    out_shape[to_fill] = out_shape[i];
+                    to_fill++;
+                }
+            }
+            out_shape.resize(to_fill);
+        }
+        return out_shape;
+    }
+
+
     int64_t WrapDim(int64_t dim, const int64_t max_dim) {
 
         if (max_dim <= 0) {
