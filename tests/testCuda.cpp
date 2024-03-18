@@ -7,6 +7,8 @@ using namespace std;
 
 int main() {
 
+    using namespace pixelflow::core;
+
     int device = pixelflow::core::cuda::DeviceCount();
 
     cout << device << endl;
@@ -94,6 +96,18 @@ int main() {
     pixelflow::core::ShapeArray reducted = pixelflow::core::ReductionShape(aa, {0, 2}, true);
 
     cout << reducted.ToString() << endl;
+
+    Image imga({3, 10, 4, 5}, PfType::Float32, Device("CPU:0"));
+    Image imgb({3, 10, 4, 5}, PfType::Float32, Device("CPU:0"));
+    Image imgc({1, 1, 4, 5}, PfType::Float32, Device("CPU:0"));
+
+    vector<Image> vimg = {imga};
+    vector<Image> vimg2 = {imgc};
+
+    Indexer cosita(vimg, vimg2, DtypePolicy::ALL_SAME, {0, 1});
+
+
+
 
     return 0;
 }

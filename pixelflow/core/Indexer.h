@@ -160,6 +160,12 @@ public:
     // thread coalescing.
     void ReorderDimensions(const ShapeArray& reduction_dims);
 
+    /// Update primary_strides_ based on primary_shape_.
+    void UpdatePrimaryStrides();
+
+    /// Update input_contiguous_ and output_contiguous_.
+    void UpdateContiguousFlags();
+
 protected:
 
     /// Number of input and output Tensors.

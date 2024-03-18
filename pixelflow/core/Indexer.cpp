@@ -141,6 +141,16 @@ namespace core {
 
             // ndims_ == inputs_[0].ndims_ == output_.ndims
             ndims_ = inputs_[0].ndims_;
+
+            // Permute reduction dimensions to front
+            ReorderDimensions(reduction_dims);
+
+            // Fill global shape
+            for (int64_t i = 0; i < ndims_; ++i) {
+                primary_shape_[i] = inputs_[0].shape_[i];
+            }
+
+
         }
     }
 
@@ -223,6 +233,25 @@ namespace core {
         }
         for (int64_t i = 0; i < num_outputs_; i++) {
             outputs_[i].Permute(permute);
+        }
+    }
+
+    void Indexer::UpdatePrimaryStrides() {
+        int64_t stride = 1;
+        for (int64_t i = ndims_ - 1; i >= 0; --i) {
+            primary_strides_[i] = stride;
+            // Handles 0-sized dimensions
+            stride = primary_shape_[i] > 1 ? stride * primary_shape_[i] : stride;
+        }
+    }
+
+    void Indexer::UpdateContiguousFlags() {
+        for (int64_t i = 0; i < num_inputs_; ++i) {
+            inputs_contiguous_[i] = inputs_[i].IsContiguous();
+        }
+
+        for (int64_t i = 0; i < num_outputs_; ++i) {
+            outputs_contiguous_[i] = outputs_[i].IsContiguous();
         }
     }
 
