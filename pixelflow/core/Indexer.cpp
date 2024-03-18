@@ -142,16 +142,48 @@ namespace core {
             // ndims_ == inputs_[0].ndims_ == output_.ndims
             ndims_ = inputs_[0].ndims_;
 
+            // Fill global shape
+            std::cout << "Ordered dims input : [";
+            for (int64_t i = 0; i < ndims_; ++i) {
+                std::cout << inputs_[0].shape_[i] << ", ";
+            }
+            std::cout << "]" << std::endl;
+
+
             // Permute reduction dimensions to front
             ReorderDimensions(reduction_dims);
 
             // Fill global shape
+            std::cout << "Ordered dims input : [";
             for (int64_t i = 0; i < ndims_; ++i) {
                 primary_shape_[i] = inputs_[0].shape_[i];
+                std::cout << inputs_[0].shape_[i] << ", ";
+            }
+            std::cout << "]" << std::endl;
+
+            // Combine dimensions to reduce index computation.
+            CoalesceDimensions();
+        } else {
+            // Broadcast inputs to match output shape, by resetting input's
+            // shape and strides.
+            // outputs_[0] is used since all outputs have the same shape.
+            for (int64_t i = 0; i < num_inputs_; ++i) {
+                BroadcastRestride(inputs_[i], outputs_[0].ndims_,
+                                  outputs_[0].shape_);
             }
 
-
+            // Fill global shape.
+            // outputs_[0] is used since all outputs have the same shape.
+            ndims_ = outputs_[0].ndims_;
+            for (int64_t i = 0; i < ndims_; ++i) {
+                primary_shape_[i] = outputs_[0].shape_[i];
+            }
         }
+
+        // Fill global strides primary_strides_.
+        UpdatePrimaryStrides();
+
+        UpdateContiguousFlags();
     }
 
     void Indexer::ReductionRestride(ImageRef& dst,
@@ -164,11 +196,88 @@ namespace core {
             << " != " << dst.ndims_;
             LogError(oss.str().c_str());
         }
+
+        std::ostringstream oss;
+        std::ostringstream oss1;
+        oss << "Byte Stride Before: [";
+        oss1 << "Byte Stride After: [";
         for (int64_t i = 0; i < dst.ndims_; ++i) {
+            oss << dst.byte_strides_[i] <<" ";
             if (dst.shape_[i] == 1 && src_shape[i] != 1) {
                 dst.byte_strides_[i] = 0;
             }
+            oss1 << dst.byte_strides_[i] <<" ";
         }
+        oss << "]";
+        oss1 << "]";
+        std::cout << oss.str() << std::endl;
+        std::cout << oss1.str() << std::endl;
+    }
+
+    void Indexer::CoalesceDimensions() {
+        if (ndims_ <= 1) {
+            return;
+        }
+
+        auto can_coalesce = [&](int64_t dim0, int64_t dim1) {
+            auto shape0 = primary_shape_[dim0];
+            auto shape1 = primary_shape_[dim1];
+            if (shape0 == 1 || shape1 == 1) {
+                return true;
+            }
+            for (int64_t i = 0; i < num_inputs_; i++) {
+                auto& stride = inputs_[i].byte_strides_;
+                if (shape0 * stride[dim0] != stride[dim1]) {
+                    return false;
+                }
+            }
+            for (int64_t i = 0; i < num_outputs_; i++) {
+                auto& stride = outputs_[i].byte_strides_;
+                if (shape0 * stride[dim0] != stride[dim1]) {
+                    return false;
+                }
+            }
+
+            return true;
+        };
+
+        // Replace each operands stride at dim0 with its stride at dim1.
+        auto replace_stride = [&](int64_t dim0, int64_t dim1) {
+            for (int64_t i = 0; i < num_inputs_; i++) {
+                inputs_[i].byte_strides_[dim0] = inputs_[i].byte_strides_[dim1];
+            }
+            for (int64_t i = 0; i < num_outputs_; i++) {
+                outputs_[i].byte_strides_[dim0] = outputs_[i].byte_strides_[dim1];
+            }
+        };
+
+        int64_t prev_dim = 0;
+        for (int64_t dim = 1; dim < ndims_; dim++) {
+            if (can_coalesce(prev_dim, dim)) {
+                if (primary_shape_[prev_dim] == 1) {
+                    replace_stride(prev_dim, dim);
+                }
+                primary_shape_[prev_dim] *= primary_shape_[dim];
+            } else {
+                prev_dim++;
+                if (prev_dim != dim) {
+                    replace_stride(prev_dim, dim);
+                    primary_shape_[prev_dim] = primary_shape_[dim];
+                }
+            }
+        }
+
+        ndims_ = prev_dim + 1;
+        for (int64_t i = 0; i < num_inputs_; i++) {
+            inputs_[i].ndims_ = ndims_;
+        }
+        for (int64_t i = 0; i < num_outputs_; i++) {
+            outputs_[i].ndims_ = ndims_;
+        }
+
+        UpdatePrimaryStrides();
+
+        UpdateContiguousFlags();
     }
 
     void Indexer::ReorderDimensions(const ShapeArray& reduction_dims) {
@@ -252,6 +361,33 @@ namespace core {
 
         for (int64_t i = 0; i < num_outputs_; ++i) {
             outputs_contiguous_[i] = outputs_[i].IsContiguous();
+        }
+    }
+
+    void Indexer::BroadcastRestride(ImageRef& src,
+                                int64_t dst_ndims,
+                                const int64_t* dst_shape) {
+        int64_t src_ndims = src.ndims_;
+
+        // Fill omitted dimensions.
+        int64_t ndims_omitted = dst_ndims - src_ndims;
+        for (int64_t i = src_ndims - 1; i >= 0; --i) {
+            src.shape_[ndims_omitted + i] = src.shape_[i];
+            src.byte_strides_[ndims_omitted + i] = src.byte_strides_[i];
+        }
+        for (int64_t i = 0; i < ndims_omitted; ++i) {
+            src.shape_[i] = 1;
+            src.byte_strides_[i] = 0;
+        }
+        src.ndims_ = dst_ndims;
+
+        // Fill broadcasted dimensions.
+        for (int64_t i = 0; i < dst_ndims; ++i) {
+            // It is okay if src.shape_[i] != 1 && dst.shape[i] == 1 for
+            // reduction.
+            if (src.shape_[i] == 1 && dst_shape[i] != 1) {
+                src.byte_strides_[i] = 0;
+            }
         }
     }
 

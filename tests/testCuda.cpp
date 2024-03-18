@@ -104,7 +104,7 @@ int main() {
     vector<Image> vimg = {imga};
     vector<Image> vimg2 = {imgc};
 
-    Indexer cosita(vimg, vimg2, DtypePolicy::ALL_SAME, {0, 1});
+    Indexer cosita(vimg, vimg2, DtypePolicy::ALL_SAME, {1,2});
 
 
 

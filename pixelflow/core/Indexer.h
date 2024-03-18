@@ -155,6 +155,12 @@ public:
                                   const int64_t* src_shape,
                                   const ShapeArray& reduction_dims);
 
+protected:
+
+    /// Merge adjacent dimensions if either dim is 1 or if:
+    /// shape[n] * stride[n] == shape[n + 1]
+    void CoalesceDimensions();
+
     // Permute reduction dimensions to front.
     // TODO: Sort the dimensions based on strides in ascending orderto improve
     // thread coalescing.
@@ -166,7 +172,35 @@ public:
     /// Update input_contiguous_ and output_contiguous_.
     void UpdateContiguousFlags();
 
-protected:
+    /// Broadcast src to dst by setting shape 1 to omitted dimensions and
+    /// setting stride 0 to brocasted dimensions.
+    ///
+    /// Note that other approaches may also work. E.g. one could set src's shape
+    /// to exactly the same as dst's shape. In general, if a dimension is of
+    /// size 1, the stride have no effect in computing offsets; or likewise if a
+    /// dimension has stride 0, the shape have no effect in computing offsets.
+    ///
+    /// [Before]
+    ///                 Omitted
+    ///                 |       Broadcast
+    ///                 |       |   No broadcast
+    ///                 |       |   |
+    ///                 V       V   V
+    /// src.shape_:   [     2,  1,  1,  3]
+    /// src.strides_: [     3,  3,  3,  1]
+    /// dst.shape_:   [ 2,  2,  2,  1,  3]
+    /// dst.strides_: [12,  6,  3,  3,  1]
+    ///
+    /// [After]
+    /// src.shape_:   [ 1,  2,  1,  1,  3]
+    /// src.strides_: [ 0,  3,  0,  3,  1]
+    ///
+    /// \param src The source TensorRef to be broadcasted.
+    /// \param dst_ndims Number of dimensions to be broadcasted to.
+    /// \param dst_shape Shape to be broadcasted to.
+    static void BroadcastRestride(ImageRef& src,
+                                  int64_t dst_ndims,
+                                  const int64_t* dst_shape);
 
     /// Number of input and output Tensors.
     int64_t num_inputs_ = 0;
