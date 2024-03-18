@@ -48,8 +48,8 @@ namespace core {
         if (!IsBroadcastable(l, r))
         {
             std::ostringstream oss;
-            oss << "Shape: " << l.Shape() << " is not broadcastable "
-            "with Shape: " << r.Shape();
+            oss << "Shape: " << l.ToString() << " is not broadcastable "
+            "with Shape: " << r.ToString();
             LogError(oss.str().c_str());
         }
 

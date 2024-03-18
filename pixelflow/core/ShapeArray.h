@@ -43,7 +43,7 @@ public:
 
     int64_t GetDims() const;
 
-    std::string Shape() const;
+    std::string ToString() const;
 };
 
 } // namespace core

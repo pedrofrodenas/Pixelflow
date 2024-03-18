@@ -25,7 +25,7 @@ int main() {
     cout << b.NumElements() << endl;
     cout << b.size() << endl;
 
-    cout << a.Shape() << endl;
+    cout << a.ToString() << endl;
 
     cout << a.GetDims() << endl;
 
@@ -34,13 +34,13 @@ int main() {
 
     pixelflow::core::ShapeArray d = pixelflow::core::ExpandDims(a, 6);
 
-    cout << d.Shape() << endl;
+    cout << d.ToString() << endl;
 
     pixelflow::core::ShapeArray e(5);
 
     pixelflow::core::ShapeArray f = pixelflow::core::BroadcastShape(aa, bb);
 
-    cout << f.Shape() << endl;
+    cout << f.ToString() << endl;
 
     std::vector<std::string> elem = pixelflow::utility::SplitString("CUDA:0", ":");
 
@@ -52,7 +52,7 @@ int main() {
 
     pixelflow::core::ShapeArray strides = pixelflow::core::DefaultStrides({5, 5, 3});
 
-    cout << strides.Shape() << endl;
+    cout << strides.ToString() << endl;
 
     pixelflow::core::Image img({5,4,3}, pixelflow::core::Float32, pixelflow::core::Device("CPU:0"));
 
@@ -86,7 +86,8 @@ int main() {
     pixelflow::core::ImageRef ref(img);
     ref.Permute(pixelflow::core::ShapeArray {1,0,2});
 
-    cout << ref.shape_[0] << endl;
+    cout << "img shape: " << img.Shape().ToString() << endl;
+    cout << "Is ref contiguous: "<< ref.IsContiguous() << endl;
 
     return 0;
 }

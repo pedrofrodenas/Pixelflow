@@ -68,6 +68,16 @@ struct ImageRef {
         }
     }
 
+    inline bool IsContiguous() const {
+        ShapeArray thisStride(ndims_);
+        ShapeArray thisShape(ndims_);
+        for (int64_t i=0; i<ndims_; ++i) {
+            thisStride[i] = byte_strides_[i]/dtype_byte_size_;
+            thisShape[i] = shape_[i];
+        }
+        return DefaultStrides(thisShape) == thisStride;
+    }
+
     void* data_ptr_;
     int64_t ndims_ = 0;
     int64_t dtype_byte_size_ = 0;

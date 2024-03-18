@@ -42,7 +42,7 @@ namespace core {
         return this->size();
     }
 
-    std::string ShapeArray::Shape() const {
+    std::string ShapeArray::ToString() const {
         std::ostringstream oss;
         oss << "[" << Join(this->begin(), this->end(), ", ") << "]";
         return oss.str();
