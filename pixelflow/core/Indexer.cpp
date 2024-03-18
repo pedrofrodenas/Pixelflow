@@ -58,37 +58,39 @@ namespace core {
                     LogError(oss.str().c_str());
                 }
             }
+        } else if (dtype_policy == DtypePolicy::INPUT_SAME) {
+            const PfType ref_dtype = input_images[0].GetDtype();
+            for (const auto& input_image : input_images) {
+                if (input_image.GetDtype() != ref_dtype) {
+                    std::ostringstream oss;
+                    oss << "Dype mismatch between inputs " << input_image.GetDtype().ToString()
+                    << " != " << ref_dtype.ToString();
+                    LogError(oss.str().c_str());
+                }
+            }
+        } else if (dtype_policy == DtypePolicy::INPUT_SAME_OUTPUT_BOOL) {
+            const PfType ref_dtype = input_images[0].GetDtype();
+            for (const auto& input_image : input_images) {
+                if (input_image.GetDtype() != ref_dtype) {
+                    std::ostringstream oss;
+                    oss << "Dype mismatch between inputs " << input_image.GetDtype().ToString()
+                    << " != " << ref_dtype.ToString();
+                    LogError(oss.str().c_str());
+                }
+            }
+            for (const auto& output_image : output_images) {
+                if (output_image.GetDtype() != PfType::Bool) {
+                    std::ostringstream oss;
+                    oss << "Dype mismatch between outputs " << output_image.GetDtype().ToString()
+                    << " != " << ref_dtype.ToString();
+                    LogError(oss.str().c_str());
+                }
+            }
+        } else if (dtype_policy == DtypePolicy::NONE) {
+            // Do nothing.
+        } else {
+            LogError("Unimplemented dtype policy");
         }
-        // } else if (dtype_policy == DtypePolicy::INPUT_SAME) {
-        //     const Dtype ref_dtype = input_tensors[0].GetDtype();
-        //     for (const auto& input_tensor : input_tensors) {
-        //         if (input_tensor.GetDtype() != ref_dtype) {
-        //             utility::LogError("Dype mismatch {} != {}.",
-        //                               input_tensor.GetDtype().ToString(),
-        //                               ref_dtype.ToString());
-        //         }
-        //     }
-        // } else if (dtype_policy == DtypePolicy::INPUT_SAME_OUTPUT_BOOL) {
-        //     const Dtype ref_dtype = input_tensors[0].GetDtype();
-        //     for (const auto& input_tensor : input_tensors) {
-        //         if (input_tensor.GetDtype() != ref_dtype) {
-        //             utility::LogError("Dype mismatch {} != {}.",
-        //                               input_tensor.GetDtype().ToString(),
-        //                               ref_dtype.ToString());
-        //         }
-        //     }
-        //     for (const auto& output_tensor : output_tensors) {
-        //         if (output_tensor.GetDtype() != core::Bool) {
-        //             utility::LogError("Dype mismatch {} != {}.",
-        //                               output_tensor.GetDtype().ToString(),
-        //                               core::Bool.ToString());
-        //         }
-        //     }
-        // } else if (dtype_policy == DtypePolicy::NONE) {
-        //     // Do nothing.
-        // } else {
-        //     utility::LogError("Unimplemented dtype policy");
-        // }
     }
 
 

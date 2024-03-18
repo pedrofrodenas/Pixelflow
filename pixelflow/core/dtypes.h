@@ -27,9 +27,11 @@ public:
     static const PfType Int32;
     static const PfType Int8;
     static const PfType UInt8;
+    static const PfType Bool;
 
     enum class PfTypeCode {
         Undefined,
+        Bool,
         Int,
         UInt,
         Float,
