@@ -42,6 +42,12 @@ public:
                    int64_t byte_size,
                    const std::string &name);
 
+    std::string ToString() const { return name; }
+
+    bool operator==(const PfType& other) const;
+
+    bool operator!=(const PfType& other) const { return !(*this == other); }
+
     int64_t getSize() const { return byte_size; }
 private:
     PfTypeCode dtype_code;

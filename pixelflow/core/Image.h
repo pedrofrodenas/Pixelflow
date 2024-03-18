@@ -79,7 +79,7 @@ public:
 
     inline void* GetDataPtr() {return data_ptr_;}
     inline const void* GetDataPtr() const {return data_ptr_;}
-    inline PfType GetDType() const {return dtype_;}
+    inline PfType GetDtype() const {return dtype_;}
 
     inline int64_t GetShape(int64_t dim) const {
         return shape_[WrapDim(dim, NumDims())];

@@ -38,5 +38,14 @@ PfType::PfType(PfTypeCode dtype_code, int64_t byte_size, const std::string &data
     }
 }
 
+bool PfType::operator==(const PfType &other) const {
+    bool rt = true;
+    rt = rt && (dtype_code == other.dtype_code);
+    rt = rt && (byte_size == other.byte_size);
+    rt = rt && (std::strcmp(name, other.name) == 0);
+    return rt;
+}
+
+
 } // namespace core
 } // namespace pixelflow
