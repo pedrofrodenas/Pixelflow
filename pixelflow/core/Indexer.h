@@ -78,6 +78,18 @@ struct ImageRef {
         return DefaultStrides(thisShape) == thisStride;
     }
 
+    bool operator==(const ImageRef& other) const {
+        bool eq = true;
+        eq = eq && (data_ptr_ == other.data_ptr_);
+        eq = eq && (ndims_ == other.ndims_);
+        eq = eq && (dtype_byte_size_ == other.dtype_byte_size_);
+        for (int64_t i = 0; i != ndims_; ++i) {
+            eq = eq && (shape_[i] == other.shape_[i]);
+            eq = eq && (byte_strides_[i] == other.byte_strides_[i]);
+        }
+        return eq;
+    }
+
     void* data_ptr_;
     int64_t ndims_ = 0;
     int64_t dtype_byte_size_ = 0;

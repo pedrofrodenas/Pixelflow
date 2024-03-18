@@ -89,5 +89,9 @@ int main() {
     cout << "img shape: " << img.Shape().ToString() << endl;
     cout << "Is ref contiguous: "<< ref.IsContiguous() << endl;
 
+    pixelflow::core::ImageRef ref2(img);
+
+    cout << "Are equal ref and ref2 ?: " << (ref == ref2) << endl;
+
     return 0;
 }
