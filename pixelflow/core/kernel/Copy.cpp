@@ -7,7 +7,7 @@ namespace core {
 
 namespace kernel {
 
-void Copy(const Image &src, Image &dst) {
+void Copy(const Image& src, Image& dst) {
 
     // Check if shape match or are broadcastable
     if (!CanBeBroadcastedTo(src.Shape(), dst.Shape())) {
@@ -29,10 +29,9 @@ void Copy(const Image &src, Image &dst) {
     }
 }
 
-void CopyCPU(const Image &src, Image &dst) {
+void CopyCPU(const Image& src, Image &dst) {
 
-    Image dd = dst.Slice(0, 1, 2, 1);
-    std::cout << src.Shape().ToString() << " " << dst.Shape().ToString() << std::endl;
+    
 }
 
 

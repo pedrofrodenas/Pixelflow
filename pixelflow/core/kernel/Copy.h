@@ -1,9 +1,11 @@
 #pragma once
 
-class Image;
+
 
 namespace pixelflow {
 namespace core {
+
+class Image;
 
 namespace kernel {
 
