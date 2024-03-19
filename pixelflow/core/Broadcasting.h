@@ -13,6 +13,9 @@ namespace core {
 
     ShapeArray BroadcastShape(const ShapeArray& l, const ShapeArray& r);
 
+    // Force that left ShapeArray should be broadcastable to right ShapeArray
+    bool CanBeBroadcastedTo(const ShapeArray& l, const ShapeArray& r);
+
     /// Computes default stride for row-mayor continuous memory
     ShapeArray DefaultStrides(const ShapeArray& shape);
 

@@ -83,6 +83,16 @@ namespace core {
         return outputArray;
     }
 
+    bool CanBeBroadcastedTo(const ShapeArray &l, const ShapeArray &r) {
+        if (!IsBroadcastable(l, r)) {
+            return false;
+        }
+        else {
+            return (BroadcastShape(l, r) == r);
+        }
+    }
+
+
     ShapeArray DefaultStrides(const ShapeArray& shape) {
         ShapeArray strides(static_cast<int64_t>(shape.size()));
         int64_t stride_size = 1;

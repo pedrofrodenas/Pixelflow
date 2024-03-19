@@ -55,6 +55,19 @@ Device::Device(const std::string& device_and_id)
     : Device(StringToDeviceType(device_and_id),
              StringToDeviceId(device_and_id)) {}
 
+bool Device::operator==(const Device& other) const {
+
+    return this->device_id_ == other.device_id_ &&
+        this->device_type_ == other.device_type_;
+
+}
+
+bool Device::operator!=(const Device &other) const {
+    return !operator==(other);
+}
+
+
+
 std::vector<Device> Device::GetAvailableDevices() {
     const std::vector<Device> cpu_devices = Device::GetAvailableCPUDevices();
     const std::vector<Device> gpu_devices = Device::GetAvailableCUDADevices();

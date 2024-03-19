@@ -109,7 +109,9 @@ int main() {
 
     Indexer cosita(vimg, vimg2, DtypePolicy::ALL_SAME);
 
+    bool tt = CanBeBroadcastedTo({2, 4, 5}, {1, 2, 4, 5});
 
+    cout << tt << endl;
 
 
     return 0;

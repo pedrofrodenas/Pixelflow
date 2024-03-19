@@ -44,6 +44,10 @@ public:
     // Returns string representation of device, e.g. "CPU:0", "CUDA:0".
     std::string ToString() const;
 
+    bool operator==(const Device& other) const;
+
+    bool operator!=(const Device& other) const;
+
     // Returns a vector of available devices.
     static std::vector<Device> GetAvailableDevices();
 

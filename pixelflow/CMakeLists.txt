@@ -27,6 +27,7 @@ set (pixelflow_SOURCES
 	"core/Image.cpp"
 	"core/Image.h"
 	"core/Indexer.cpp"
+	"core/kernel/Copy.cpp"
 )
 
 # Configure a header file to pass the version settings to the source code
