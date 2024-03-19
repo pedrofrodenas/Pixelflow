@@ -142,27 +142,16 @@ namespace core {
             // ndims_ == inputs_[0].ndims_ == output_.ndims
             ndims_ = inputs_[0].ndims_;
 
-            // Fill global shape
-            std::cout << "Ordered dims input : [";
-            for (int64_t i = 0; i < ndims_; ++i) {
-                std::cout << inputs_[0].shape_[i] << ", ";
-            }
-            std::cout << "]" << std::endl;
-
-
             // Permute reduction dimensions to front
             ReorderDimensions(reduction_dims);
 
-            // Fill global shape
-            std::cout << "Ordered dims input : [";
             for (int64_t i = 0; i < ndims_; ++i) {
                 primary_shape_[i] = inputs_[0].shape_[i];
-                std::cout << inputs_[0].shape_[i] << ", ";
             }
-            std::cout << "]" << std::endl;
 
             // Combine dimensions to reduce index computation.
             CoalesceDimensions();
+
         } else {
             // Broadcast inputs to match output shape, by resetting input's
             // shape and strides.
@@ -197,21 +186,11 @@ namespace core {
             LogError(oss.str().c_str());
         }
 
-        std::ostringstream oss;
-        std::ostringstream oss1;
-        oss << "Byte Stride Before: [";
-        oss1 << "Byte Stride After: [";
         for (int64_t i = 0; i < dst.ndims_; ++i) {
-            oss << dst.byte_strides_[i] <<" ";
             if (dst.shape_[i] == 1 && src_shape[i] != 1) {
                 dst.byte_strides_[i] = 0;
             }
-            oss1 << dst.byte_strides_[i] <<" ";
         }
-        oss << "]";
-        oss1 << "]";
-        std::cout << oss.str() << std::endl;
-        std::cout << oss1.str() << std::endl;
     }
 
     void Indexer::CoalesceDimensions() {
@@ -222,6 +201,9 @@ namespace core {
         auto can_coalesce = [&](int64_t dim0, int64_t dim1) {
             auto shape0 = primary_shape_[dim0];
             auto shape1 = primary_shape_[dim1];
+            // std::cout << "shape0: " << shape0 << " shape1: " << shape1 << std::endl;
+            // std::cout << "dim0 input stride: " << inputs_[0].byte_strides_[dim0] << " ,dim1 stride: " << inputs_[0].byte_strides_[dim1] << std::endl;
+            // std::cout << "dim0 output stride: " << outputs_[0].byte_strides_[dim0] << " ,dim1 stride: " << outputs_[0].byte_strides_[dim1] << std::endl;
             if (shape0 == 1 || shape1 == 1) {
                 return true;
             }

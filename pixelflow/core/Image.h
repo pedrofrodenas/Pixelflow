@@ -77,6 +77,8 @@ public:
 
     inline ShapeArray Shape() const {return shape_;}
 
+    inline ShapeArray Stride() const {return strides_;}
+
     inline void* GetDataPtr() {return data_ptr_;}
     inline const void* GetDataPtr() const {return data_ptr_;}
     inline PfType GetDtype() const {return dtype_;}

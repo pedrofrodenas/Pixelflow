@@ -101,10 +101,13 @@ int main() {
     Image imgb({3, 10, 4, 5}, PfType::Float32, Device("CPU:0"));
     Image imgc({1, 1, 4, 5}, PfType::Float32, Device("CPU:0"));
 
+    cout << "imga stride" << imga.Stride().ToString() << endl;
+    cout << "imgc stride" << imgc.Stride().ToString() << endl;
+
     vector<Image> vimg = {imga};
     vector<Image> vimg2 = {imgc};
 
-    Indexer cosita(vimg, vimg2, DtypePolicy::ALL_SAME, {1,2});
+    Indexer cosita(vimg, vimg2, DtypePolicy::ALL_SAME);
 
 
 
