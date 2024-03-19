@@ -1,4 +1,5 @@
 #include "pixelflow/core/Image.h"
+#include "pixelflow/core/kernel/Copy.h"
 
 namespace pixelflow {
 namespace core {
@@ -58,7 +59,15 @@ namespace core {
     }
 
     Image Image::To(const Device &device, bool copy) const {
+        // If we don't want to copy Image and resides in the same device
+        // we return the same Image
+        if (!copy && GetDevice() == device) {
+            return *this;
+        }
 
+        Image dst_image(shape_, dtype_, device);
+        kernel::Copy(*this, dst_image);
+        return dst_image;
     }
 
 

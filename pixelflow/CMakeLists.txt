@@ -25,7 +25,6 @@ set (pixelflow_SOURCES
     "core/Broadcasting.cpp"
     "utility/StringUtils.cpp"
 	"core/Image.cpp"
-	"core/Image.h"
 	"core/Indexer.cpp"
 	"core/kernel/Copy.cpp"
 )

@@ -109,9 +109,7 @@ int main() {
 
     Indexer cosita(vimg, vimg2, DtypePolicy::ALL_SAME);
 
-    bool tt = CanBeBroadcastedTo({2, 4, 5}, {1, 2, 4, 5});
-
-    cout << tt << endl;
+    img1.To(Device("CPU:0"), true);
 
 
     return 0;
