@@ -103,6 +103,12 @@ public:
     /// \param step Pick one element for every \p step elements.
     Image Slice(int64_t dim, int64_t start, int64_t stop, int64_t step);
 
+    /// Returns a image with the specified \p device.
+    /// \param device The targeted device to convert to.
+    /// \param copy If true, a new tensor is always created; if false, the copy
+    /// is avoided when the original image is already on the targeted device.
+    Image To(const Device& device, bool copy = false) const;
+
 
     /// Iterator for Image.
     struct Iterator {

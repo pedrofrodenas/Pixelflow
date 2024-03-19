@@ -57,6 +57,11 @@ namespace core {
         return Image(new_shape, new_stride, new_data_ptr, dtype_, blob_);
     }
 
+    Image Image::To(const Device &device, bool copy) const {
+
+    }
+
+
 
     Device Image::GetDevice() const {
 

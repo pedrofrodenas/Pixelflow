@@ -6,9 +6,11 @@ namespace core {
     Indexer::Indexer(const std::vector<Image> &input_images,
                      const Image &output_image,
                      DtypePolicy dtype_policy,
-                     const ShapeArray &reduction_dims) {
-
-    }
+                     const ShapeArray &reduction_dims)
+        : Indexer(input_images,
+                  std::vector<Image>{output_image},
+                  dtype_policy,
+                  reduction_dims) {}
 
     Indexer::Indexer(const std::vector<Image> &input_images,
                      const std::vector<Image> &output_images,
@@ -219,7 +221,6 @@ namespace core {
                     return false;
                 }
             }
-
             return true;
         };
 
