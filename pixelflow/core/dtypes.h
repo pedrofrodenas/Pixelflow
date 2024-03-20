@@ -46,6 +46,8 @@ public:
 
     std::string ToString() const { return name; }
 
+    int64_t ByteSize() const { return byte_size; }
+
     bool operator==(const PfType& other) const;
 
     bool operator!=(const PfType& other) const { return !(*this == other); }

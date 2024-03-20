@@ -1,7 +1,9 @@
 #pragma once
 
+#include <cstring>
 #include <unordered_map>
 #include <memory>
+
 
 #include "pixelflow/core/Device.h"
 #include "pixelflow/utility/Structs.h"

@@ -1,6 +1,8 @@
 #include "pixelflow/core/kernel/Copy.h"
 #include "pixelflow/core/Image.h"
 #include "pixelflow/core/Broadcasting.h"
+#include "pixelflow/core/Indexer.h"
+#include "pixelflow/core/Dispatch.h"
 
 namespace pixelflow {
 namespace core {
@@ -31,7 +33,26 @@ void Copy(const Image& src, Image& dst) {
 
 void CopyCPU(const Image& src, Image &dst) {
 
-    
+    // src and dst have been checked to have the same shape, dtype, device
+    PfType src_dtype = src.GetDtype();
+    PfType dst_dtype = dst.GetDtype();
+
+    if (src.Shape() == dst.Shape() && 
+        src_dtype == dst_dtype && 
+        src.IsContiguous() && dst.IsContiguous()) {
+            MemoryManager::Memcpy(dst.GetDataPtr(), dst.GetDevice(),
+                                  src.GetDataPtr(), src.GetDevice(), 
+                                  src.NumElements()*src_dtype.ByteSize());
+        }
+    else {
+        
+        // Create an Indexer object
+        Indexer indexer({src}, dst, DtypePolicy::NONE);
+        DISPATCH_DTYPE_TO_TEMPLATE_WITH_BOOL(src_dtype, [&]() {
+                using src_t = scalar_t;
+        )
+        }
+    }
 }
 
 
