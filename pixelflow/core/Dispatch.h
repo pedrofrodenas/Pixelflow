@@ -13,6 +13,7 @@
 #pragma once
 
 #include "pixelflow/utility/Logging.h"
+#include "pixelflow/core/dtypes.h"
 
 /// Call a numerical templated function based on Dtype. Wrap the function to
 /// a lambda function to use DISPATCH_DTYPE_TO_TEMPLATE.
@@ -53,7 +54,7 @@
             using scalar_t = uint8_t;                            \
             return __VA_ARGS__();                                \
         } else {                                                 \
-            pixelflow::utility::LogError("Unsupported data type."); \
+            LogError("Unsupported data type."); \
         }                                                        \
     }()
 

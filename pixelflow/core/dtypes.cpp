@@ -24,6 +24,7 @@ const PfType PfType::Bool     (PfType::PfTypeCode::Bool,      1, "Bool"     );
 const PfType Undefined = PfType::Undefined;
 const PfType Float32 = PfType::Float32;
 const PfType Float64 = PfType::Float64;
+const PfType Int8 = PfType::Int8;
 const PfType Int64 = PfType::Int64;
 const PfType Int32 = PfType::Int32;
 const PfType UInt8 = PfType::UInt8;

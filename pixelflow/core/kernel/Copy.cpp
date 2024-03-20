@@ -50,8 +50,7 @@ void CopyCPU(const Image& src, Image &dst) {
         Indexer indexer({src}, dst, DtypePolicy::NONE);
         DISPATCH_DTYPE_TO_TEMPLATE_WITH_BOOL(src_dtype, [&]() {
                 using src_t = scalar_t;
-        )
-        }
+        });
     }
 }
 

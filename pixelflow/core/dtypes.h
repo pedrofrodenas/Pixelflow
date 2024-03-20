@@ -61,6 +61,14 @@ private:
 };
 
 extern const PfType Float32;
+extern const PfType Undefined;
+extern const PfType Float32;
+extern const PfType Float64;
+extern const PfType Int8;
+extern const PfType Int32;
+extern const PfType Int64;
+extern const PfType UInt8;
+extern const PfType Bool;
 
 }
 }
