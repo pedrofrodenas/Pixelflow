@@ -45,11 +45,15 @@ void CopyCPU(const Image& src, Image &dst) {
                                   src.NumElements()*src_dtype.ByteSize());
         }
     else {
-        
         // Create an Indexer object
         Indexer indexer({src}, dst, DtypePolicy::NONE);
         DISPATCH_DTYPE_TO_TEMPLATE_WITH_BOOL(src_dtype, [&]() {
-                using src_t = scalar_t;
+            using src_t = scalar_t;
+            DISPATCH_DTYPE_TO_TEMPLATE_WITH_BOOL(dst_dtype, [&]() {
+                using dst_t = scalar_t;
+                // LaunchUnaryEWKernel<src_t, dst_t>(
+                //         indexer, CPUCopyElementKernel<src_t, dst_t>);
+            });
         });
     }
 }
