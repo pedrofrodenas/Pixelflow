@@ -328,8 +328,14 @@ protected:
         } else {
             int64_t offset = 0;
             for (int64_t i = 0; i < ndims_; ++i) {
+                // (workload_idx / primary_strides_[i]) siempre que workload_idx no sea
+                // mayor que los strides de la dimension procesada dara 0, sino dara 1
+                // y el offset sera igual al bytestride de esa dimension
                 offset += workload_idx / primary_strides_[i] *
                           tr.byte_strides_[i];
+                // Cuando el calculo anterior sea igual a byte_stride[i]
+                // se reiniciara workload_idx a 0 para la siguiente
+                // dimension
                 workload_idx = workload_idx % primary_strides_[i];
             }
             return static_cast<T*>(static_cast<void*>(

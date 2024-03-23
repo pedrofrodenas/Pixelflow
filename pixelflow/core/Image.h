@@ -73,6 +73,11 @@ public:
         return strides_ == DefaultStrides(shape_);
     }
 
+    /// Returns a contiguous Image containing the same data in the same device.
+    /// If self tensor is already contiguous, the same underlying memory will be
+    /// used.
+    Image Contiguous() const;
+
     Device GetDevice() const override;
 
     inline ShapeArray Shape() const {return shape_;}

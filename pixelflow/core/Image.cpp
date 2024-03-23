@@ -58,6 +58,16 @@ namespace core {
         return Image(new_shape, new_stride, new_data_ptr, dtype_, blob_);
     }
 
+    Image Image::Contiguous() const {
+        if (IsContiguous()) {
+            return *this;
+        }
+        else {
+            return To(GetDevice(), true);
+        }
+    }
+
+
     Image Image::To(const Device &device, bool copy) const {
         // If we don't want to copy Image and resides in the same device
         // we return the same Image
