@@ -3,11 +3,38 @@
 #include "pixelflow/core/Broadcasting.h"
 #include "pixelflow/core/Indexer.h"
 #include "pixelflow/core/Dispatch.h"
+#include "pixelflow/core/ParallelFor.h"
 
 namespace pixelflow {
 namespace core {
 
 namespace kernel {
+
+template <typename src_t, typename dst_t>
+static void CPUCopyElementKernel(const void* src, void* dst) {
+    *static_cast<dst_t*>(dst) =
+        static_cast<dst_t>(*static_cast<const src_t*>(src));
+    }
+
+template <typename element_func_t>
+static void LaunchUnaryEWKernel(const Indexer& indexer,
+                                const element_func_t& element_func) {
+    ParallelFor(Device("CPU:0"), indexer.NumWorkloads(),
+                [&indexer, &element_func](int64_t i) {
+                    element_func(indexer.GetInputPtr(0, i),
+                                 indexer.GetOutputPtr(i));
+                });
+}
+
+template <typename src_t, typename dst_t, typename element_func_t>
+static void LaunchUnaryEWKernel(const Indexer& indexer,
+                                const element_func_t& element_func) {
+    ParallelFor(Device("CPU:0"), indexer.NumWorkloads(),
+                [&indexer, &element_func](int64_t i) {
+                    element_func(indexer.GetInputPtr<src_t>(0, i),
+                                 indexer.GetOutputPtr<dst_t>(i));
+                });
+}
 
 void Copy(const Image& src, Image& dst) {
 
@@ -51,8 +78,8 @@ void CopyCPU(const Image& src, Image &dst) {
             using src_t = scalar_t;
             DISPATCH_DTYPE_TO_TEMPLATE_WITH_BOOL(dst_dtype, [&]() {
                 using dst_t = scalar_t;
-                // LaunchUnaryEWKernel<src_t, dst_t>(
-                //         indexer, CPUCopyElementKernel<src_t, dst_t>);
+                LaunchUnaryEWKernel<src_t, dst_t>(
+                        indexer, CPUCopyElementKernel<src_t, dst_t>);
             });
         });
     }

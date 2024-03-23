@@ -27,7 +27,6 @@ set (pixelflow_SOURCES
 	"core/Image.cpp"
 	"core/Indexer.cpp"
 	"core/kernel/Copy.cpp"
-	"core/kernel/UnarySchedulerCPU.cpp"
 )
 
 # Configure a header file to pass the version settings to the source code
