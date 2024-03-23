@@ -21,8 +21,7 @@ namespace core {
 
 
 
-
-/// Run a function in parallel on CPU or CUDA.
+    /// Run a function in parallel on CPU or CUDA.
 ///
 /// \param device The device for the parallel for loop to run on.
 /// \param n The number of workloads.
@@ -41,6 +40,22 @@ void ParallelFor(const Device& device, int64_t n, const func_t& func) {
 #else
     ParallelForCPU_(device, n, func);
 #endif
+}
+
+/// Run a function in parallel on CPU.
+template <typename func_t>
+void ParallelForCPU_(const Device& device, int64_t n, const func_t& func) {
+    if (!device.IsCPU()) {
+        LogError("ParallelFor for CPU cannot run on device");
+    }
+    if (n == 0) {
+        return;
+    }
+
+#pragma omp parallel for num_threads(utility::EstimateMaxThreads())
+    for (int64_t i = 0; i < n; ++i) {
+        func(i);
+    }
 }
 
 }

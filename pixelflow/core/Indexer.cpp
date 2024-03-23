@@ -374,6 +374,14 @@ namespace core {
         }
     }
 
+    int64_t Indexer::NumWorkloads() const {
+        int64_t num_workloads = 1;
+        for (int64_t i = 0; i < ndims_; ++i) {
+            num_workloads *= primary_shape_[i];
+        }
+        return num_workloads;
+    }
+
 
 
 } // namespace core
