@@ -108,12 +108,16 @@ int main() {
     cout << "img_test stride: " << img_test.Stride().ToString() << endl;
 
 
-    Image img_test2 = img_test.IndexExtract(2, 0);
+    Image img_test2 = img_test.IndexExtract(1, 0);
     cout << "img_test2 Shape: " << img_test2.Shape().ToString() << endl;
     cout << "NumDims: " << img_test.NumDims() << endl;
 
     cout << img_test2.ToString() << endl;
 
+    cout << "imgp: \n";
+    Image imgp = img_test.GetItem(TensorKey::Slice(1, 6, 1));
+
+    cout << imgp.ToString() << endl;
 
     return 0;
 }

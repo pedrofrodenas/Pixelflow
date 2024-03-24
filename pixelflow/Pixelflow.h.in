@@ -14,4 +14,5 @@
 #include "pixelflow/utility/StringUtils.h"
 #include "pixelflow/core/Image.h"
 #include "pixelflow/core/Indexer.h"
+#include "pixelflow/core/TensorKey.h"
 #include "pixelflow/pfconfig.h"

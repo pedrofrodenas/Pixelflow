@@ -6,7 +6,7 @@
 namespace pixelflow {
 namespace core {
 
-    Image Image::Slice(int64_t dim, int64_t start, int64_t stop, int64_t step) {
+    Image Image::Slice(int64_t dim, int64_t start, int64_t stop, int64_t step) const {
 
         if (shape_.GetDims() == 0) {
             LogError("Image is 0-dim");
@@ -68,8 +68,8 @@ namespace core {
             LogError("Cannot index a 0 sized Image");
         }
 
-        dim = WrapDim(dim, NumDims());
-        idx = WrapDim(idx, shape_[dim] - 1);
+        dim = WrapDim(dim, NumDims() - 1);
+        idx = WrapDim(idx, shape_[dim]);
 
         // Get the original shape and stride
         ShapeArray new_shape(shape_);
@@ -92,6 +92,23 @@ namespace core {
             return To(GetDevice(), true);
         }
     }
+
+    Image Image::GetItem(const TensorKey &tk) const {
+        if (tk.GetMode() == TensorKey::TensorKeyMode::Index) {
+            return IndexExtract(0, tk.GetIndex());
+        } else if (tk.GetMode() == TensorKey::TensorKeyMode::Slice) {
+            if (NumDims() == 0) {
+                LogError("Cannot slice a scalar (0-dim) image.");
+            }
+            TensorKey tk_new = tk.InstantiateDimSize(shape_[0]);
+            return Slice(0, tk_new.GetStart(), tk_new.GetStop(), tk_new.GetStep());
+        } else if (tk.GetMode() == TensorKey::TensorKeyMode::IndexTensor) {
+            LogError("TensorKey::TensorKeyMode::IndexTensor not implemented yet");
+        } else {
+            LogError("Internal error: wrong TensorKeyMode.");
+        }
+    }
+
 
 
     Image Image::To(const Device &device, bool copy) const {

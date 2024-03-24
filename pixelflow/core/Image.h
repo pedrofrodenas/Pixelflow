@@ -129,7 +129,7 @@ public:
     /// \param start The start index (inclusive).
     /// \param stop The end index (exclusive).
     /// \param step Pick one element for every \p step elements.
-    Image Slice(int64_t dim, int64_t start, int64_t stop, int64_t step);
+    Image Slice(int64_t dim, int64_t start, int64_t stop, int64_t step) const;
 
     /// Extract the i-th Image along the first axis, returning a new view.
     Image operator[](int64_t i) const;
