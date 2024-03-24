@@ -27,6 +27,7 @@ set (pixelflow_SOURCES
 	"core/Image.cpp"
 	"core/Indexer.cpp"
 	"core/kernel/Copy.cpp"
+	"core/TensorKey.cpp"
 )
 
 # Configure a header file to pass the version settings to the source code
