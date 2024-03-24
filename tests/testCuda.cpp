@@ -101,15 +101,18 @@ int main() {
     cout << img2.IsContiguous() << endl;
     Image img3 = img2.Contiguous();
 
-    Image img_test(vector<int>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, {3, 3}, pixelflow::core::PfType::Int32,
+    Image img_test(vector<int>{0, 1, 2, 3, 4, 5, 6, 7, 8}, {3, 3}, pixelflow::core::PfType::Int32,
             pixelflow::core::Device("CPU:0"));
 
     cout << "img_test shape: " << img_test.Shape().ToString() << endl;
     cout << "img_test stride: " << img_test.Stride().ToString() << endl;
-    Image img_test2 = img_test.IndexExtract(1, 1);
-    cout << "img_test2 Shape: " << img_test2.Shape().ToString() << endl;
 
-    cout << img_test.ToString() << endl;
+
+    Image img_test2 = img_test.IndexExtract(2, 0);
+    cout << "img_test2 Shape: " << img_test2.Shape().ToString() << endl;
+    cout << "NumDims: " << img_test.NumDims() << endl;
+
+    cout << img_test2.ToString() << endl;
 
 
     return 0;

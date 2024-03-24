@@ -68,6 +68,9 @@ namespace core {
             LogError("Cannot index a 0 sized Image");
         }
 
+        dim = WrapDim(dim, NumDims());
+        idx = WrapDim(idx, shape_[dim] - 1);
+
         // Get the original shape and stride
         ShapeArray new_shape(shape_);
         ShapeArray new_stride(strides_);

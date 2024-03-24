@@ -148,7 +148,11 @@ namespace core {
         int64_t min = -max_dim;
 
         if (dim < min || dim > max_dim) {
-            LogError("Index out of range");
+            std::ostringstream rc;
+            rc << "Index out-of-range: dim == " << dim
+            << ", but it must satisfy " << min << " <= dim <="
+            << max_dim;
+            LogError(rc.str().c_str());
         }
 
         if (dim < 0) {

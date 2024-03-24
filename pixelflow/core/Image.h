@@ -9,6 +9,7 @@
 #include "pixelflow/core/dtypes.h"
 #include "pixelflow/core/Blob.h"
 #include "pixelflow/core/MemoryManager.h"
+#include "pixelflow/core/TensorKey.h"
 #include "pixelflow/core/Dispatch.h"
 
 namespace pixelflow {
@@ -100,6 +101,27 @@ public:
     inline int64_t NumElements() const { return shape_.NumElements(); }
 
     inline int64_t NumDims() const { return shape_.GetDims(); }
+
+    /// Pythonic __getitem__ for image.
+    ///
+    /// Returns a view of the original image, if TensorKey is
+    /// TensorKeyMode::Index or TensorKeyMode::Slice. Returns a copy if the
+    /// TensorKey contains TensorKeyMode::IndexTensor (advanced indexing).
+    ///
+    /// For example, in numpy:
+    /// ```python
+    /// t = np.empty((4, 5), dtype=np.float32)
+    /// t1 = t[2]
+    /// t2 = t[0:4:2]
+    /// ```
+    ///
+    /// The equivalent Open3D C++ calls:
+    /// ```cpp
+    /// Image t({4, 5}, core::Float32);
+    /// Image t1 = t.GetItem(TensorIndex(2));
+    /// Image t2 = t.GetItem(TensorSlice(0, 4, 2));
+    /// ```
+    Image GetItem(const TensorKey& tk) const;
 
     /// Slice Image.
     ///
