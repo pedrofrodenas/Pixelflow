@@ -116,8 +116,14 @@ int main() {
 
     cout << "imgp: \n";
     Image imgp = img_test.GetItem(TensorKey::Slice(1, 6, 1));
-
     cout << imgp.ToString() << endl;
+
+    Image imgpp = img_test.GetItem({TensorKey::Index(1), TensorKey::Index(1)});
+    cout << imgpp.ToString() << endl;
+
+    Image imgo = img_test.GetItem(TensorKey::Index(1));
+    cout << imgo.ToString() << endl;
+    cout << "NumDims: " << imgo.NumDims() << endl;
 
     return 0;
 }

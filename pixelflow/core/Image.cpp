@@ -68,7 +68,7 @@ namespace core {
             LogError("Cannot index a 0 sized Image");
         }
 
-        dim = WrapDim(dim, NumDims() - 1);
+        dim = WrapDim(dim, NumDims());
         idx = WrapDim(idx, shape_[dim]);
 
         // Get the original shape and stride
@@ -109,7 +109,29 @@ namespace core {
         }
     }
 
+    Image Image::GetItem(const std::vector<TensorKey>& tks) const {
+        if (std::any_of(tks.begin(), tks.end(), [](const TensorKey& tk) {
+                return tk.GetMode() == TensorKey::TensorKeyMode::IndexTensor;
+            })) {
+            LogError("IndexTensor is not implemented in GetItem");
+        }
 
+        Image t = *this;
+        int64_t slice_dim = 0;
+        for (const TensorKey& tk : tks) {
+            if (tk.GetMode() == TensorKey::TensorKeyMode::Index) {
+                t = t.IndexExtract(slice_dim, tk.GetIndex());
+            } else if (tk.GetMode() == TensorKey::TensorKeyMode::Slice) {
+                TensorKey tk_new = tk.InstantiateDimSize(t.shape_[slice_dim]);
+                t = t.Slice(slice_dim, tk_new.GetStart(), tk_new.GetStop(),
+                            tk_new.GetStep());
+                slice_dim++;
+            } else {
+                LogError("Internal error: wrong TensorKeyMode.");
+            }
+        }
+        return t;
+    }
 
     Image Image::To(const Device &device, bool copy) const {
         // If we don't want to copy Image and resides in the same device
