@@ -108,6 +108,13 @@ public:
     /// \param step Pick one element for every \p step elements.
     Image Slice(int64_t dim, int64_t start, int64_t stop, int64_t step);
 
+    /// Extract the i-th Image along the first axis, returning a new view.
+    Image operator[](int64_t i) const;
+
+    /// Extract the \p idx -th sub-image in dimension \p dim. After
+    /// IndexExtract, the dimension \p dim will be removed.
+    Image IndexExtract(int64_t dim, int64_t idx) const;
+
     /// Returns a image with the specified \p device.
     /// \param device The targeted device to convert to.
     /// \param copy If true, a new tensor is always created; if false, the copy

@@ -58,6 +58,27 @@ namespace core {
         return Image(new_shape, new_stride, new_data_ptr, dtype_, blob_);
     }
 
+    Image Image::operator[](int64_t i) const { return IndexExtract(0, i); }
+
+    Image Image::IndexExtract(int64_t dim, int64_t idx) const {
+
+        if (shape_.size() == 0) {
+            LogError("Cannot index a 0 sized Image");
+        }
+
+        // Get the original shape and stride
+        ShapeArray new_shape(shape_);
+        ShapeArray new_stride(strides_);
+
+        // Delete data until dim
+        new_shape.erase(new_shape.begin() + dim);
+        new_stride.erase(new_stride.begin() + dim);
+
+        void* new_data_ptr = static_cast<char*>(data_ptr_) + ( strides_[dim] * dtype_.ByteSize() * idx);
+
+        return {new_shape, new_stride, new_data_ptr, dtype_, blob_};
+    }
+
     Image Image::Contiguous() const {
         if (IsContiguous()) {
             return *this;
