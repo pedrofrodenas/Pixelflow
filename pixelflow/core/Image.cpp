@@ -1,6 +1,8 @@
 #include "pixelflow/core/Image.h"
 #include "pixelflow/core/kernel/Copy.h"
 
+
+
 namespace pixelflow {
 namespace core {
 
@@ -101,7 +103,65 @@ namespace core {
         return dst_image;
     }
 
+    std::string Image::ToString(bool with_suffix,
+                                const std::string& indent) const {
+        std::ostringstream rc;
+        if (IsCUDA() || !IsContiguous()) {
+            Image host_contiguous_tensor = Contiguous().To(Device("CPU:0"));
+            rc << host_contiguous_tensor.ToString(false, indent);
+        } else {
+            if (shape_.NumElements() == 0) {
+                rc << indent;
+                rc << "0-element Tensor";
+            } else if (shape_.size() == 0) {
+                rc << indent;
+                rc << ScalarPtrToString(data_ptr_);
+            } else if (shape_.size() == 1) {
+                const char* ptr = static_cast<const char*>(data_ptr_);
+                rc << "[";
+                std::string delim = "";
+                int64_t element_byte_size = dtype_.ByteSize();
+                for (int64_t i = 0; i < shape_.NumElements(); ++i) {
+                    rc << delim << ScalarPtrToString(ptr);
+                    delim = " ";
+                    ptr += element_byte_size;
+                }
+                rc << "]";
+            } else {
+                rc << "[";
+                std::string delim = "";
+                std::string child_indent = "";
+                for (int64_t i = 0; i < shape_[0]; ++i) {
+                    rc << delim << child_indent
+                       << this->operator[](i).ToString(false, indent + " ");
+                    delim = ",\n";
+                    child_indent = indent + " ";
+                }
+                rc << "]";
+            }
+        }
+        if (with_suffix) {
+            std::ostringstream ra;
+            ra << "\nTensor[shape=" << shape_.ToString() << ", stride="
+            << strides_.ToString() << ", " << dtype_.ToString() << ", "
+            << GetDevice().ToString() << "]";
+            rc << ra.str();
+        }
+        return rc.str();
+    }
 
+    std::string Image::ScalarPtrToString(const void* ptr) const {
+        std::ostringstream out;
+        if (dtype_ == core::Bool) {
+            out << *static_cast<const unsigned char*>(ptr) ? "True" : "False";
+        }
+        else {
+            DISPATCH_DTYPE_TO_TEMPLATE(dtype_, [&]() {
+                out << " " << *static_cast<const scalar_t*>(ptr) << " ";
+            });
+        }
+        return out.str();
+    }
 
     Device Image::GetDevice() const {
 

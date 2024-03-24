@@ -109,6 +109,8 @@ int main() {
     Image img_test2 = img_test.IndexExtract(1, 1);
     cout << "img_test2 Shape: " << img_test2.Shape().ToString() << endl;
 
+    cout << img_test.ToString() << endl;
+
 
     return 0;
 }

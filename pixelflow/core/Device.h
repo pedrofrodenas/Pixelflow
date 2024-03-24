@@ -70,11 +70,11 @@ public:
 
     virtual Device GetDevice() const = 0;
 
-    inline bool isCPU() const {
+    inline bool IsCPU() const {
         return (GetDevice().GetType() == Device::DeviceType::CPU);
     }
 
-    inline bool isCUDA() const {
+    inline bool IsCUDA() const {
         return (GetDevice().GetType() == Device::DeviceType::CUDA);
     }
 };

@@ -9,6 +9,7 @@
 #include "pixelflow/core/dtypes.h"
 #include "pixelflow/core/Blob.h"
 #include "pixelflow/core/MemoryManager.h"
+#include "pixelflow/core/Dispatch.h"
 
 namespace pixelflow {
 namespace core {
@@ -120,6 +121,12 @@ public:
     /// \param copy If true, a new tensor is always created; if false, the copy
     /// is avoided when the original image is already on the targeted device.
     Image To(const Device& device, bool copy = false) const;
+
+    std::string ToString(bool with_suffix = true,
+                         const std::string& indent = "") const;
+
+    std::string ScalarPtrToString(const void* ptr) const;
+
 
 
     /// Iterator for Image.
