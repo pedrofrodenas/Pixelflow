@@ -6,6 +6,11 @@
 namespace pixelflow {
 namespace core {
 
+    Image Image::SetItem(const Image& value) {
+        this->AsRvalue() = value;
+        return *this;
+    }
+
     Image Image::Slice(int64_t dim, int64_t start, int64_t stop, int64_t step) const {
 
         if (shape_.GetDims() == 0) {

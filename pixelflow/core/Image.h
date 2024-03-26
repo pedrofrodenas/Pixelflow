@@ -102,6 +102,24 @@ public:
 
     inline int64_t NumDims() const { return shape_.GetDims(); }
 
+    /// Set all items. Equivalent to `tensor[:] = value` in Python.
+    Image SetItem(const Image& value);
+
+    /// Convert to rvalue such that the Tensor can be assigned.
+    ///
+    /// E.g. in numpy
+    /// \code{.py}
+    /// tensor_a = tensor_b     # tensor_a is lvalue, tensor_a variable will
+    ///                         # now reference tensor_b, that is, tensor_a
+    ///                         # and tensor_b share exactly the same memory.
+    /// tensor_a[:] = tensor_b  # tensor_a[:] is rvalue, tensor_b's values are
+    ///                         # assigned to tensor_a's memory.
+    /// \endcode
+    Image AsRvalue() { return *this; }
+
+    /// Convert to constant rvalue.
+    const Image AsRvalue() const { return *this; }
+
     /// Pythonic __getitem__ for image.
     ///
     /// Returns a view of the original image, if TensorKey is

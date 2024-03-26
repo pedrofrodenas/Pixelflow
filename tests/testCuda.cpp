@@ -125,5 +125,9 @@ int main() {
     cout << imgo.ToString() << endl;
     cout << "NumDims: " << imgo.NumDims() << endl;
 
+    Image v = imgo.AsRvalue();
+
+    cout << v.ToString() << endl;
+
     return 0;
 }
