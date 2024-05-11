@@ -3,7 +3,7 @@ from ctypes import *
 import math
 import random
 
-lib = CDLL(os.path.join(os.path.dirname(__file__), "build", "src", "libPixelflow.so"), RTLD_GLOBAL)
+lib = CDLL(os.path.join(os.path.dirname(__file__), "build", "pixelflow", "libPixelflow.so"), RTLD_GLOBAL)
 
 def c_array(ctype, values):
     arr = (ctype*len(values))()
@@ -127,9 +127,9 @@ save_image_lib.restype = None
 def save_image(im, f):
     return save_image_lib(im, f.encode('ascii'))
 
-same_image = lib.same_image
-same_image.argtypes = [IMAGE, IMAGE]
-same_image.restype = c_int
+# same_image = lib.same_image
+# same_image.argtypes = [IMAGE, IMAGE]
+# same_image.restype = c_int
 
 nn_resize = lib.nn_resize
 nn_resize.argtypes = [IMAGE, c_int, c_int]
